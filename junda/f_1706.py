@@ -27,8 +27,8 @@ def f_1706(df, fruits=None, days=None, seed=None, sales_lower_bound=1, sales_upp
     Example:
     >>> initial_df = pd.DataFrame()
     >>> report_df, plot = f_1706(initial_df, seed=42)
-    >>> print(report_df.head())
-    >>> plot.figure.show()
+    >>> print(report_df.head()) # doctest: +SKIP
+    >>> plot.figure.show() # doctest: +SKIP
     """
     if not isinstance(df, pd.DataFrame):
         raise TypeError("Input must be a pandas DataFrame")
@@ -60,7 +60,7 @@ import pandas as pd
 import numpy as np
 from datetime import datetime
 
-class TestF1706(unittest.TestCase):
+class TestCases(unittest.TestCase):
     def setUp(self):
         # Define the default date range for comparison in tests
         self.default_days = [datetime(2024, 1, 1) + timedelta(days=x) for x in range(7)]
@@ -140,5 +140,14 @@ class TestF1706(unittest.TestCase):
         # Optionally, check the error message to ensure it's for the non-empty DataFrame condition
         self.assertTrue("Input DataFrame must be empty" in str(context.exception), "Function should raise ValueError for non-empty DataFrame input.")
 
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
 if __name__ == "__main__":
-    unittest.main()
+    import doctest
+    doctest.testmod()
+    run_tests()
