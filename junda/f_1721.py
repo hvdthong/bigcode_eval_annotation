@@ -1,4 +1,3 @@
-import numpy as np
 import pandas as pd
 from random import choices, seed
 
@@ -21,8 +20,13 @@ def f_1721(products, ratings, weights, random_seed=42):
     >>> ratings = [1, 2, 3, 4, 5]
     >>> weights = [0.05, 0.1, 0.2, 0.3, 0.35]
     >>> df = f_1721(products, ratings, weights, 42)
-    >>> print(df.head())
-    # Expected output is a DataFrame sorted by 'Rating', which may vary due to randomness.
+    >>> print(df.head()) # Expected output is a DataFrame sorted by 'Rating', which may vary due to randomness.
+           Product  Rating
+    4  Apple Watch       5
+    0       iPhone       4
+    2      Macbook       3
+    3      Airpods       3
+    1         iPad       1
     """
 
     seed(random_seed)  # Setting the seed for reproducibility
@@ -38,8 +42,9 @@ def f_1721(products, ratings, weights, random_seed=42):
     return df
 
 import unittest
+import pandas as pd
 
-class TestF_1721(unittest.TestCase):
+class TestCases(unittest.TestCase):
     def setUp(self):
         self.products = ["iPhone", "iPad", "Macbook", "Airpods", "Apple Watch"]
         self.ratings = [1, 2, 3, 4, 5]
@@ -78,5 +83,14 @@ class TestF_1721(unittest.TestCase):
    
         self.assertEqual(df_list, expect, "DataFrame contents should match the expected output")
 
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
