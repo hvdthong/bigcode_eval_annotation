@@ -1,5 +1,3 @@
-import unittest
-
 import pandas as pd
 import numpy as np
 import math
@@ -24,11 +22,17 @@ def f_1723(data, target, k):
     Constants:
     radius of earth is 6371 km
 
+    Requirements:
+    - numpy
+    - pandas
+    - datetime
+
     Example:
     >>> data = pd.DataFrame([[14, 25], [1, 22], [7, 8]], columns=['Latitude', 'Longitude'])
     >>> target = [10, 15]
     >>> k = 2
     >>> f_1723(data, target, k)
+    [[7, 8], [14, 25]]
     """
     if not isinstance(k, int) or k < 0:
         raise ValueError("'k' must be a non-negative integer")
@@ -54,7 +58,11 @@ def f_1723(data, target, k):
 
     return nearest_neighbors
 
-class TestF1723(unittest.TestCase):
+
+import unittest
+import pandas as pd
+
+class TestCases(unittest.TestCase):
     def setUp(self):
         self.data = pd.DataFrame([[14, 25], [1, 22], [7, 8], [10, 15]], columns=['Latitude', 'Longitude'])
         self.target = [10, 15]
@@ -94,5 +102,14 @@ class TestF1723(unittest.TestCase):
         expect = [[10, 15], [7, 8], [14, 25], [1, 22]]
         self.assertAlmostEqual(result, expect)
 
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
