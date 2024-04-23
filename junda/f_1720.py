@@ -19,6 +19,12 @@ def f_1720(students=["Alice", "Bob", "Charlie", "David", "Eve"], seed=42):
     Example:
     >>> scores, plot = f_1720()
     >>> print(scores)
+       Student  Score
+    2  Charlie     14
+    0    Alice     51
+    4      Eve     60
+    3    David     71
+    1      Bob     92
     """
     np.random.seed(seed)
     scores_data = [(student, np.random.randint(0, 100)) for student in students]
@@ -31,8 +37,9 @@ def f_1720(students=["Alice", "Bob", "Charlie", "David", "Eve"], seed=42):
     return df, ax
 
 import unittest
+import pandas as pd
 
-class TestF1720(unittest.TestCase):
+class TestCases(unittest.TestCase):
     def setUp(self):
         self.students = ["Alice", "Bob", "Charlie", "David", "Eve"]
 
@@ -67,5 +74,14 @@ class TestF1720(unittest.TestCase):
         #     file.write(str(df_list))
         self.assertEqual(df_list, expect, "DataFrame contents should match the expected output")
 
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
