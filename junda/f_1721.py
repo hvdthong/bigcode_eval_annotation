@@ -15,6 +15,10 @@ def f_1721(products, ratings, weights, random_seed=42):
     Returns:
     pandas.DataFrame: A DataFrame with two columns: 'Product' and 'Rating', sorted by 'Rating' in descending order.
 
+    Requirements:
+    - pandas
+    - random
+
     Example:
     >>> products = ["iPhone", "iPad", "Macbook", "Airpods", "Apple Watch"]
     >>> ratings = [1, 2, 3, 4, 5]
