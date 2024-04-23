@@ -33,7 +33,7 @@ def f_1719(start_date, end_date, random_seed=42):
     >>> start_date = datetime(2021, 1, 1)
     >>> end_date = datetime(2021, 12, 31)
     >>> data, plot = f_1719(start_date, end_date)
-    >>> print(data.head())  # Display the first few rows of the DataFrame
+    >>> print(data.head())  # Display the first few rows of the DataFrame # doctest: +SKIP
     >>> plot.get_figure().savefig("weather_data_plot.png")  # Save the plot to a file
     """
     if end_date < start_date:
@@ -61,7 +61,7 @@ def f_1719(start_date, end_date, random_seed=42):
 import unittest
 from datetime import datetime
 
-class TestF1719(unittest.TestCase):
+class TestCases(unittest.TestCase):
 
     def test_random_reproducibility(self):
         start_date = datetime(2021, 1, 1)
@@ -119,7 +119,7 @@ class TestF1719(unittest.TestCase):
         start_date = datetime(2021, 1, 1)
         end_date = datetime(2021, 1, 5)
         _, ax = f_1719(start_date, end_date)
-        self.assertTrue(str(type(ax)).endswith("matplotlib.axes._subplots.AxesSubplot'>"), "The second return value should be a matplotlib Axes object")
+        self.assertTrue(str(type(ax)).endswith("matplotlib.axes._axes.Axes'>"), "The second return value should be a matplotlib Axes object")
 
     def test_negative_date_range(self):
         start_date = datetime(2021, 1, 10)
@@ -133,8 +133,14 @@ class TestF1719(unittest.TestCase):
         df, _ = f_1719(start_date, end_date)
         self.assertEqual(len(df), 1, "DataFrame should contain exactly one row for a single day date range")
 
-    
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
 
-
-if __name__ == '__main__':
-    unittest.main()
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
