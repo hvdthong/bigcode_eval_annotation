@@ -27,8 +27,14 @@ def f_1706(df, fruits=None, days=None, seed=None, sales_lower_bound=1, sales_upp
     Example:
     >>> initial_df = pd.DataFrame()
     >>> report_df, plot = f_1706(initial_df, seed=42)
-    >>> print(report_df.head()) # doctest: +SKIP
-    >>> plot.figure.show() # doctest: +SKIP
+    >>> print(report_df.head())
+       Fruit        Day  Sales
+    0  Apple 2024-01-01     39
+    1  Apple 2024-01-02     29
+    2  Apple 2024-01-03     15
+    3  Apple 2024-01-04     43
+    4  Apple 2024-01-05      8
+    >>> plot.figure.show() 
     """
     if not isinstance(df, pd.DataFrame):
         raise TypeError("Input must be a pandas DataFrame")
