@@ -1,13 +1,12 @@
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 
 def f_1720(students=["Alice", "Bob", "Charlie", "David", "Eve"], seed=42):
     """
     Generate random scores for a given list of students, sort these scores in ascending order,
     and return both the scores and a bar plot of these scores.
 
-    Args:
+    Parameters:
     students (list of str): List of student names.
     seed (int): Seed for the random number generator. Default is 42.
 
@@ -16,6 +15,11 @@ def f_1720(students=["Alice", "Bob", "Charlie", "David", "Eve"], seed=42):
     Axes: A matplotlib Axes object containing the bar plot of scores.
 
     use np.random.randint(0, 100) to generate the scores of the students
+
+    Requirements:
+    - numpy
+    - pandas
+
     Example:
     >>> scores, plot = f_1720()
     >>> print(scores)
