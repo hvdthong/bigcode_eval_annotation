@@ -25,7 +25,13 @@ def f_1718(products, n_samples=100, sales_lower=50, sales_upper=200, profit_marg
     Example:
     >>> products = ["iPhone", "iPad", "Macbook", "Airpods", "Apple Watch"]
     >>> report = f_1718(products, n_samples=50, sales_lower=100, sales_upper=150, profit_margin_min=0.2, profit_margin_max=0.4, random_seed=42)
-    >>> print(report) # doctest: +SKIP
+    >>> print(report)
+           Product  Sales      Profit
+    2      Macbook   1561  444.826709
+    3         iPad   1383  401.925334
+    0      Airpods   1297  381.482713
+    1  Apple Watch   1123  308.078536
+    4       iPhone    921  294.013887
     """
     np.random.seed(random_seed)
     
