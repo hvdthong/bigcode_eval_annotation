@@ -25,7 +25,7 @@ def f_1718(products, n_samples=100, sales_lower=50, sales_upper=200, profit_marg
     Example:
     >>> products = ["iPhone", "iPad", "Macbook", "Airpods", "Apple Watch"]
     >>> report = f_1718(products, n_samples=50, sales_lower=100, sales_upper=150, profit_margin_min=0.2, profit_margin_max=0.4, random_seed=42)
-    >>> print(report)
+    >>> print(report) # doctest: +SKIP
     """
     np.random.seed(random_seed)
     
@@ -54,10 +54,10 @@ def f_1718(products, n_samples=100, sales_lower=50, sales_upper=200, profit_marg
 
     return df
 
-
+import pandas as pd
 import unittest
 
-class TestGenerateSalesReport(unittest.TestCase):
+class TestCases(unittest.TestCase):
 
     def test_random_reproducibility(self):
         report1 = f_1718(["iPhone", "iPad"], n_samples=50, sales_lower=50, sales_upper=200, profit_margin_min=0.1, profit_margin_max=0.5, random_seed=42)
@@ -122,5 +122,14 @@ class TestGenerateSalesReport(unittest.TestCase):
         pd.testing.assert_frame_equal(report1, report2)
 
 
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
 if __name__ == "__main__":
-    unittest.main()
+    import doctest
+    doctest.testmod()
+    run_tests()
