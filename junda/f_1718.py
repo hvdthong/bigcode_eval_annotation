@@ -22,6 +22,10 @@ def f_1718(products, n_samples=100, sales_lower=50, sales_upper=200, profit_marg
     ValueError: If n_samples is not a positive integer, or if sales_lower is greater than sales_upper.
     TypeError: If products is not a list of strings, or if sales_lower, sales_upper, profit_margin_min, or profit_margin_max are not numeric.
 
+    Requirements:
+    - numpy
+    - pandas
+
     Example:
     >>> products = ["iPhone", "iPad", "Macbook", "Airpods", "Apple Watch"]
     >>> report = f_1718(products, n_samples=50, sales_lower=100, sales_upper=150, profit_margin_min=0.2, profit_margin_max=0.4, random_seed=42)
