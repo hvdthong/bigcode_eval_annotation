@@ -1,7 +1,6 @@
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 def f_1719(start_date, end_date, random_seed=42):
     """
@@ -29,11 +28,22 @@ def f_1719(start_date, end_date, random_seed=42):
     Raises:
     - ValueError: If 'end_date' is before 'start_date', indicating an invalid date range.
 
+    Requirements:
+    - numpy
+    - pandas
+    - datetime
+
     Example:
     >>> start_date = datetime(2021, 1, 1)
     >>> end_date = datetime(2021, 12, 31)
     >>> data, plot = f_1719(start_date, end_date)
-    >>> print(data.head())  # Display the first few rows of the DataFrame # doctest: +SKIP
+    >>> print(data.head())  # Display the first few rows of the DataFrame 
+            Date  Temperature   Humidity  Wind Speed
+    0 2021-01-01     8.727006  96.057145   14.639879
+    1 2021-01-02    19.932924  32.481491    3.119890
+    2 2021-01-03    -7.095819  89.294092   12.022300
+    3 2021-01-04    25.403629  21.646760   19.398197
+    4 2021-01-05    31.622132  36.987129    3.636499
     >>> plot.get_figure().savefig("weather_data_plot.png")  # Save the plot to a file
     """
     if end_date < start_date:
