@@ -58,7 +58,6 @@ def f_1723(data, target, k):
 
     return nearest_neighbors
 
-
 import unittest
 import pandas as pd
 
