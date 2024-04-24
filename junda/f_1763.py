@@ -1,6 +1,5 @@
 import pandas as pd
 from random import randint, seed as random_seed
-import matplotlib.pyplot as plt
 import statistics
 import numpy as np
 
@@ -22,13 +21,18 @@ def f_1763(animals=None, seed=42):
     Requirements:
     - pandas
     - random
-    - matplotlib.pyplot
     - statistics
     - numpy
 
     Example:
     >>> report = f_1763()
     >>> print(report)
+         Animal  Mean  Median  Mode  Standard Deviation
+    0      Lion  42.0    30.5    95           33.250564
+    1  Elephant  44.4    41.5    12           34.197076
+    2     Tiger  61.1    71.0    30           28.762649
+    3   Giraffe  51.8    54.5    54           29.208903
+    4     Panda  35.8    32.0    44           24.595935
 
     Note: The mode is not included in the returned DataFrame due to the possibility of no repeating values 
     in the randomly generated counts.
@@ -52,7 +56,7 @@ def f_1763(animals=None, seed=42):
 import unittest
 import pandas as pd
 
-class TestF_1763(unittest.TestCase):
+class TestCases(unittest.TestCase):
     def test_default_animals(self):
         report = f_1763()
         
@@ -87,5 +91,14 @@ class TestF_1763(unittest.TestCase):
         report = f_1763()
         self.assertIsInstance(report, pd.DataFrame)
 
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
