@@ -29,11 +29,18 @@ def f_1762(my_list, size=100, seed=100):
     The histogram plots the distribution of the random numbers generated, with the number range (1-100) 
     on the x-axis and the count (frequency) of each number on the y-axis.
 
+    Requirements:
+    - random
+    - time
+    - matplotlib.pyplot
+
     Example:
     >>> my_list = [2, 3, 5]
     >>> time_taken, ax = f_1762(my_list)
-    >>> print(time_taken)  # Example output: 0.002
+    >>> print(round(time_taken, 5))  # Example output: 2e-05
+    2e-05
     >>> ax.get_title()  # Returns 'Histogram of Random Numbers'
+    'Histogram of Random Numbers'
     """
     if not isinstance(my_list, list):
         raise TypeError("Input must be a list.")
@@ -58,7 +65,7 @@ def f_1762(my_list, size=100, seed=100):
 
 import unittest
 
-class TestF1762(unittest.TestCase):
+class TestCases(unittest.TestCase):
     def test_output_types(self):
         my_list = [1, 2, 3]
         time_taken, ax = f_1762(my_list)
@@ -96,5 +103,14 @@ class TestF1762(unittest.TestCase):
 
     # Additional test cases as needed...
 
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
