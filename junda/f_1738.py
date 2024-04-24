@@ -1,5 +1,4 @@
 import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
 from itertools import cycle
 
@@ -22,7 +21,6 @@ def f_1738(df, groups=['A', 'B', 'C', 'D', 'E']):
 
     Requirements:
     - pandas
-    - numpy
     - matplotlib.pyplot
     - itertools
 
@@ -54,9 +52,8 @@ def f_1738(df, groups=['A', 'B', 'C', 'D', 'E']):
     return ax
 
 import unittest
-from matplotlib.collections import PathCollection
 
-class TestF_1738(unittest.TestCase):
+class TestCases(unittest.TestCase):
     def setUp(self):
         self.df = pd.DataFrame({
             "group": ["A", "A", "A", "B", "B"],
@@ -85,5 +82,14 @@ class TestF_1738(unittest.TestCase):
         self.assertEqual(ax.get_ylabel(), 'Value')
         self.assertEqual(ax.get_title(), 'Scatterplot of Values for Each Group Over Time')
 
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
