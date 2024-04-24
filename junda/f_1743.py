@@ -22,6 +22,10 @@ def f_1743(df, items=None, locations=None):
     Raises:
     - ValueError: If 'df' is not a DataFrame, or if 'Item' or 'Location' columns are missing.
 
+    Requirements:
+    - pandas
+    - matplotlib.pyplot
+
     Example:
     >>> df = pd.DataFrame({
     ...     'Item': ['apple', 'banana', 'apple', 'orange'],
@@ -64,7 +68,7 @@ def get_bar_values(ax):
     return values
 
 
-class TestF_1743(unittest.TestCase):
+class TestCases(unittest.TestCase):
     def setUp(self):
         self.df = pd.DataFrame({
             'Item': ['apple', 'banana', 'apple', 'orange', 'grape', 'pineapple', 'banana', 'orange'],
@@ -100,5 +104,14 @@ class TestF_1743(unittest.TestCase):
         self.assertEqual(ax.get_ylabel(), 'Count')
 
 
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
