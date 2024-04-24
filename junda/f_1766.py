@@ -1,4 +1,3 @@
-from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
@@ -24,11 +23,22 @@ def f_1766(url='http://example.com'):
     - requests.HTTPError: If the HTTP request to the URL fails.
     - ValueError: If no table data is found on the page or if the page content cannot be parsed.
 
+    Note: Assumes the webpage contains at least one table and attempts to parse the first table encountered.
+
+    Requirements:
+    - pandas
+    - requests
+    - bs4
+
     Example usage:
     >>> df = f_1766()
+    Traceback (most recent call last):
+      ...
+    ValueError: Error parsing the page content: No table found on the page.
     >>> print(df)
-
-    Note: Assumes the webpage contains at least one table and attempts to parse the first table encountered.
+    Traceback (most recent call last):
+      ...
+    NameError: name 'df' is not defined
     """
     try:
         response = requests.get(url)
@@ -62,16 +72,14 @@ def f_1766(url='http://example.com'):
         df = pd.DataFrame(data, columns=headers if headers else None)
     except Exception as e:
         raise ValueError(f"Error parsing the page content: {e}")
-
     return df
-
-
 
 import unittest
 from unittest.mock import patch, Mock
 import pandas as pd
+import requests
 
-class TestF1766(unittest.TestCase):
+class TestCases(unittest.TestCase):
     @patch('requests.get')
     def test_return_type(self, mock_get):
         # Simulate HTML content for a successful response
@@ -143,5 +151,14 @@ class TestF1766(unittest.TestCase):
         self.assertEqual(df.iloc[2]['Name'], 'Mike Brown', "The last row's Name should be 'Mike Brown'")
 
 
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
