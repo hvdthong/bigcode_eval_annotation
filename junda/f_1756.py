@@ -24,21 +24,28 @@ def f_1756(start_date=datetime(2020, 1, 1), end_date=datetime(2020, 12, 31), see
     Raises:
     - ValueError: If 'start_date' or 'end_date' is not a datetime.datetime instance, or if 'start_date' 
       is later than 'end_date'.
-    
-    Example:
-    >>> dates = f_1756(seed=123)
-    >>> print(dates.head())  # Prints the first 5 dates from the series
-    
+
     Note:
     The start_date and end_date are inclusive, meaning both dates are considered as potential values 
     in the generated series. The default seed value is 42, ensuring that results are reproducible by default 
     unless a different seed is specified by the user.
     
-    Required Libraries:
+    Requirements:
     - pandas
     - datetime
     - random
+    
+    Example:
+    >>> dates = f_1756(seed=123)
+    >>> print(dates.head())  # Prints the first 5 dates from the series
+    0   2020-01-27
+    1   2020-05-17
+    2   2020-02-14
+    3   2020-07-27
+    4   2020-05-16
+    dtype: datetime64[ns]
     """
+    
     if not all(isinstance(date, datetime) for date in [start_date, end_date]):
         raise ValueError("start_date and end_date must be datetime.datetime objects.")
     if start_date > end_date:
@@ -51,8 +58,10 @@ def f_1756(start_date=datetime(2020, 1, 1), end_date=datetime(2020, 12, 31), see
     return dates
 
 import unittest
+from datetime import datetime
+import pandas as pd
 
-class TestF1756(unittest.TestCase):
+class TestCases(unittest.TestCase):
     def test_reproducibility_with_seed(self):
         seed_value = 42
         dates1 = f_1756(seed=seed_value)
@@ -93,6 +102,14 @@ class TestF1756(unittest.TestCase):
         for date in dates:
             self.assertTrue(start_date <= date <= end_date)
 
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
 
-if __name__ == '__main__':
-    unittest.main()
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
