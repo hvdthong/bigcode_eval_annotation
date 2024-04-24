@@ -1,10 +1,9 @@
-
+import matplotlib.pyplot as plt
+import pandas as pd
+import random
+from datetime import datetime
 
 def f_1734(seed=42):
-    import matplotlib.pyplot as plt
-    import pandas as pd
-    import random
-    from datetime import datetime
     """
     Generates a plot of random time series data for the past 30 days with reproducibility 
     controlled by an optional seed parameter.
