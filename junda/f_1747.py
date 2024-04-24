@@ -1,5 +1,4 @@
 import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
 
 
@@ -18,16 +17,17 @@ def f_1747(df):
     
     Raises:
     ValueError: If 'df' is not a pandas DataFrame or does not contain the 'Status' column.
+
+    Requirements:
+    - pandas
+    - numpy
+    - matplotlib.pyplot
     
     Example:
     >>> df = pd.DataFrame({'Status': ['Pending', 'Completed', 'In Progress', 'Cancelled', 'Completed', 'Pending']})
     >>> ax = f_1747(df)
     >>> ax.get_title() # Should return 'Status Distribution'
-
-    Required Libraries:
-    - pandas
-    - numpy
-    - matplotlib.pyplot
+    'Status Distribution'
     """
     if not isinstance(df, pd.DataFrame) or 'Status' not in df.columns:
         raise ValueError("Input must be a pandas DataFrame with a 'Status' column.")
@@ -43,7 +43,7 @@ import unittest
 from random import choice
 import random
 
-class TestF1747(unittest.TestCase):
+class TestCases(unittest.TestCase):
     def setUp(self):
         random.seed(42)
         self.df = pd.DataFrame({'Status': [choice(['Pending', 'In Progress', 'Completed', 'Cancelled']) for _ in range(100)]})
@@ -89,5 +89,14 @@ class TestF1747(unittest.TestCase):
     # Additional test cases can be added for scenarios like DataFrame with only one status,
     # DataFrame with unusual status categories, etc.
 
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
