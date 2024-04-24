@@ -27,6 +27,10 @@ def f_1772(hex_str):
     Example:
     >>> df, ax = f_1772('F3BE8080')
     >>> print(df)
+       Byte Value  Frequency
+    0         128          2
+    1         190          1
+    2         243          1
     >>> plt.show()
     """
     hex_str_cleaned = hex_str.replace('\\x', '')
@@ -51,7 +55,7 @@ import unittest
 import pandas as pd
 import matplotlib.pyplot as plt
 
-class TestF_1772(unittest.TestCase):
+class TestCases(unittest.TestCase):
     def test_valid_hex_string(self):
         df, ax = f_1772('F3BE8080')
         self.assertIsInstance(df, pd.DataFrame)
@@ -96,5 +100,14 @@ class TestF_1772(unittest.TestCase):
             self.assertTrue((df['Byte Value'] == value).any())
             self.assertEqual(df.loc[df['Byte Value'] == value, 'Frequency'].values[0], frequency)
 
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
