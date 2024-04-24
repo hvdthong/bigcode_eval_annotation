@@ -1,5 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
 
 def f_1744(df):
     """
@@ -12,11 +13,12 @@ def f_1744(df):
     Axes: Matplotlib Axes object with the line chart.
 
     Raises:
-    ValueError: If 'df' is not a DataFrame or lacks 'Date' or 'Sales' columns.
+    ValueError: If 'df' is not a DataFrame or lacks 'Date' or 'Sales' columns, or has no data to plot.
 
     Requirements:
     - pandas
     - matplotlib.pyplot
+    - numpy
 
     Example:
     >>> df = pd.DataFrame({
@@ -27,9 +29,7 @@ def f_1744(df):
     >>> ax.get_title()  # Expected: 'Daily Turnover'
     'Daily Turnover'
     >>> ax.get_ylabel()  # Expected: 'Sales'
-    'Sales'    
-    Raises:
-    ValueError: If 'df' is not a DataFrame, lacks 'Date' or 'Sales' columns, or has no data to plot.
+    'Sales'
     """
     if not isinstance(df, pd.DataFrame) or not all(col in df.columns for col in ['Date', 'Sales']):
         raise ValueError("Invalid 'df': must be a DataFrame with 'Date' and 'Sales' columns.")
@@ -41,7 +41,7 @@ def f_1744(df):
     if resampled_df.empty or resampled_df['Sales'].sum() == 0:
         raise ValueError("No data available to plot after resampling.")
 
-    ax = resampled_df['Sales'].plot()
+    ax = resampled_df.plot(y='Sales')
     ax.set_title('Daily Turnover')
     ax.set_ylabel('Sales')
 
@@ -52,7 +52,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-class TestF_1744(unittest.TestCase):
+class TestCases(unittest.TestCase):
     def setUp(self):
         np.random.seed(42)
         self.df = pd.DataFrame({
@@ -72,19 +72,16 @@ class TestF_1744(unittest.TestCase):
         
     def test_value(self):
         # Adjusted to include more data points
-
         ax = f_1744(self.df)
         # Retrieve the line plot data
         # Assuming 'ax' is the Axes object returned by your function 'f_1744'
 
         # Retrieve the line plot data
-        line = ax.lines[0]  # Get the first (and likely only) line plot
-        dates = line.get_xdata()
+        line = ax.get_lines()[0]  # Get the first (and likely only) line plot
         sales = line.get_ydata()
         actual_sales = [str(int(sale)) for sale in sales]
 
         expect = ['1226', '1559', '960', '1394', '1230', '1195', '1824', '1144', '1738', '221']
-        
         self.assertEqual(actual_sales, expect, "DataFrame contents should match the expected output")
         
 
@@ -113,5 +110,14 @@ class TestF_1744(unittest.TestCase):
         ax = f_1744(df_with_string_dates)
         self.assertIsInstance(ax, plt.Axes)
 
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
