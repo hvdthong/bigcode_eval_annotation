@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import pandas as pd
-from pytz import timezone
 from datetime import datetime
+import random
 
 def f_1736(temperatures):
     """
@@ -23,7 +23,7 @@ def f_1736(temperatures):
     Requirements:
         - matplotlib
         - pandas
-        - pytz
+        - random
         - datetime
 
     Example:
@@ -33,7 +33,7 @@ def f_1736(temperatures):
         ... }).set_index('date')
         >>> ax = f_1736(temperatures)
         >>> type(ax)
-        <class 'matplotlib.axes._subplots.AxesSubplot'>
+        <class 'matplotlib.axes._axes.Axes'>
     """
     try:
         if temperatures.empty or not isinstance(temperatures, pd.DataFrame):
@@ -60,7 +60,7 @@ import pandas as pd
 from datetime import datetime
 import random
 
-class TestF1736(unittest.TestCase):
+class TestCases(unittest.TestCase):
 
     def setUp(self):
         self.temperatures = pd.DataFrame({
@@ -100,6 +100,14 @@ class TestF1736(unittest.TestCase):
         for date, temperature in zip(plot_dates, plot_temperatures):
             self.assertAlmostEqual(temperature, self.temperatures.at[pd.Timestamp(date), 'temperature'])
 
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
 
-if __name__ == '__main__':
-    unittest.main()
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
