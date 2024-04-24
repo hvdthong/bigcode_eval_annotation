@@ -1,9 +1,10 @@
-import matplotlib.pyplot as plt
-import pandas as pd
-import random
-from datetime import datetime
+
 
 def f_1734(seed=42):
+    import matplotlib.pyplot as plt
+    import pandas as pd
+    import random
+    from datetime import datetime
     """
     Generates a plot of random time series data for the past 30 days with reproducibility 
     controlled by an optional seed parameter.
@@ -22,7 +23,7 @@ def f_1734(seed=42):
         ValueError: If there is an issue generating the data or plot.
 
     Requirements:
-        - matplotlib
+        - matplotlib.pyplot
         - pandas
         - random
         - datetime
@@ -56,10 +57,9 @@ def f_1734(seed=42):
 
 
 import unittest
-import matplotlib.pyplot as plt
+import pandas as pd 
 
-
-class TestF1734(unittest.TestCase):
+class TestCases(unittest.TestCase):
 
     def test_plot_attributes(self):
         ax = f_1734()
@@ -100,5 +100,14 @@ class TestF1734(unittest.TestCase):
         expect = [81, 14, 3, 94, 35, 31, 28, 17, 94, 13, 86, 94, 69, 11, 75, 54, 4, 3, 11, 27, 29, 64, 77, 3, 71, 25, 91, 83, 89, 69]
         self.assertEqual(expect, y_data.tolist(), "DataFrame contents should match the expected output")
 
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
