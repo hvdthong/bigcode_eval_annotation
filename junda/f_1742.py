@@ -58,13 +58,17 @@ def f_1742(df, freq='D', decomposition_model='multiplicative'):
     # Decomposition
     result = seasonal_decompose(df['value'], model=decomposition_model)
 
-    return result
+    ax = df.plot(y='value')
+    plt.ylabel('Value')
+    plt.title('Time Series Decomposition')
+
+    return (result, ax)
 
 import unittest
 import pandas as pd
 from statsmodels.tsa.seasonal import DecomposeResult
 
-class TestF_1742(unittest.TestCase):
+class TestCases(unittest.TestCase):
     def setUp(self):
         # Data setup with sufficient data points
         date_range = pd.date_range(start='2022-01-01', periods=30, freq='D')
@@ -76,7 +80,7 @@ class TestF_1742(unittest.TestCase):
 
     def test_return_type(self):
         try:
-            result = f_1742(self.df)
+            result, _ = f_1742(self.df)
             self.assertIsInstance(result, DecomposeResult)
         except ValueError as e:
             self.fail(f"Unexpected ValueError raised: {e}")
@@ -109,21 +113,21 @@ class TestF_1742(unittest.TestCase):
 
     def test_components_existence(self):
         # Testing the existence of decomposition components
-        result = f_1742(self.df)
+        result, _ = f_1742(self.df)
         self.assertTrue(hasattr(result, 'trend'))
         self.assertTrue(hasattr(result, 'seasonal'))
         self.assertTrue(hasattr(result, 'resid'))
 
     def test_component_shapes(self):
         # Testing the shape of each component
-        result = f_1742(self.df)
+        result, _ = f_1742(self.df)
         self.assertEqual(result.trend.shape, self.df['value'].shape)
         self.assertEqual(result.seasonal.shape, self.df['value'].shape)
         self.assertEqual(result.resid.shape, self.df['value'].shape)
 
     def test_additive_model(self):
         # Testing with the additive model
-        result = f_1742(self.df, decomposition_model='additive')
+        result, _ = f_1742(self.df, decomposition_model='additive')
         self.assertIsInstance(result, DecomposeResult)
         def to_single_line(data):
             return ','.join(data.astype(str))
@@ -153,5 +157,14 @@ class TestF_1742(unittest.TestCase):
         with self.assertRaises(ValueError):
             f_1742(df_with_missing)
 
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
