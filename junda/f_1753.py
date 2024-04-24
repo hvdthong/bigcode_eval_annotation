@@ -26,10 +26,6 @@ def f_1753(num_of_students, seed=42, name_list=None, gender_list=None, age_range
     Raises:
     - ValueError: If num_of_students is non-positive.
 
-    Example:
-    >>> student_data = f_1753(5, seed=123)
-    >>> print(student_data)
-
     Notes:
     - The 'Name' column values are selected randomly from the 'name_list'.
     - The 'Age' column values are integers randomly generated within the 'age_range', inclusive.
@@ -41,6 +37,16 @@ def f_1753(num_of_students, seed=42, name_list=None, gender_list=None, age_range
     - pandas
     - numpy
     - random
+
+    Example:
+    >>> student_data = f_1753(5, seed=123)
+    >>> print(student_data.head())
+       Name  Age  Gender  Score
+    0  John   20  Female     52
+    1  John   19  Female     84
+    2  Sara   16    Male     69
+    3  John   17  Female     72
+    4  Nick   16  Female     82
     """
     if num_of_students <= 0:
         raise ValueError("num_of_students must be positive.")
@@ -67,7 +73,7 @@ import unittest
 import pandas as pd
 import numpy as np
 
-class TestF_1753(unittest.TestCase):
+class TestCases(unittest.TestCase):
     def test_with_seed(self):
         df1 = f_1753(5, seed=42)        
         df_list = df1.apply(lambda row: ','.join(row.values.astype(str)), axis=1).tolist()
@@ -107,5 +113,14 @@ class TestF_1753(unittest.TestCase):
         df = f_1753(10, score_range=(60, 70))
         self.assertTrue(all(60 <= score <= 70 for score in df['Score']))
 
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
