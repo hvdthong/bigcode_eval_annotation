@@ -56,8 +56,9 @@ def f_1740(df):
 import unittest
 import pandas as pd
 import numpy as np
+from sklearn.linear_model import LinearRegression
 
-class TestF_1740(unittest.TestCase):
+class TestCases(unittest.TestCase):
     def setUp(self):
         self.df = pd.DataFrame({
             "group": ["A", "A", "A", "B", "B"],
@@ -85,5 +86,14 @@ class TestF_1740(unittest.TestCase):
         with self.assertRaises(ValueError):
             f_1740(pd.DataFrame())
 
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
