@@ -35,8 +35,9 @@ def f_1733():
     return pair_plot.fig
 
 import unittest
+import matplotlib.pyplot as plt
 
-class TestF1733(unittest.TestCase):
+class TestCases(unittest.TestCase):
     def setUp(self):
         self.fig = f_1733()
 
@@ -59,5 +60,14 @@ class TestF1733(unittest.TestCase):
         self.assertIsNotNone(self.fig._suptitle, "The figure should have a title.")
         self.assertEqual(self.fig._suptitle.get_text(), 'Iris Dataset Pair Plot', "The figure title does not match expected.")
 
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
