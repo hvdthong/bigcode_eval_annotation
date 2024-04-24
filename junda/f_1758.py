@@ -1,9 +1,5 @@
 import pandas as pd
 import numpy as np
-from random import randint, seed as random_seed
-import matplotlib.pyplot as plt
-import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
 
 def f_1758(my_list, seed=42):
@@ -22,17 +18,24 @@ def f_1758(my_list, seed=42):
     
     Raises:
     TypeError: If 'my_list' is not a list.
+
+    Requirements:
+    - pandas
+    - numpy
+    - matplotlib.pyplot as plt
     
     Example:
     >>> my_list = [1, 2, 3]
     >>> data, ax = f_1758(my_list, seed=123)
     >>> print(data)
+             Category  Sales
+    0     Electronics   1395
+    1         Fashion   1266
+    2  Home & Kitchen    198
+    3      Automotive    351
+    4          Sports   2472
     >>> ax.get_title()  # Returns 'Category-wise Sales Data'
-
-    Required Libraries:
-    - pandas
-    - numpy
-    - matplotlib.pyplot
+    'Category-wise Sales Data'
     """
     if not isinstance(my_list, list):
         raise TypeError("Input must be a list.")
@@ -56,8 +59,10 @@ def f_1758(my_list, seed=42):
     return sales_df, ax
 
 import unittest
+import pandas as pd
+import matplotlib.pyplot as plt
 
-class TestF1758(unittest.TestCase):
+class TestCases(unittest.TestCase):
     def test_reproducibility_with_seed(self):
 
         seed_value = 42
@@ -88,6 +93,14 @@ class TestF1758(unittest.TestCase):
         data, _ = f_1758(my_list)
         self.assertEqual(len(data), 5)  # 5 categories
 
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
 
-if __name__ == '__main__':
-    unittest.main()
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
