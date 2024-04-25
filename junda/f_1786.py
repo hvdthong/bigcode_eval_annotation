@@ -18,7 +18,6 @@ def f_1786():
 
     Requirements:
         - numpy
-        - sympy
         - matplotlib.pyplot
     """
     X = np.linspace(-10, 10, 400)  # X range specified
@@ -44,7 +43,7 @@ import unittest
 import matplotlib.pyplot as plt
 import matplotlib
 
-class TestF_1786(unittest.TestCase):
+class TestCases(unittest.TestCase):
     def test_return_type(self):
         ax = f_1786()
         self.assertIsInstance(ax, plt.Axes)
@@ -84,6 +83,14 @@ class TestF_1786(unittest.TestCase):
         ax = f_1786()
         self.assertEqual(ax.get_xlim(), (-10, 10))  # Check if the x-axis range is set as expected
 
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
 
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
