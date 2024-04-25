@@ -46,7 +46,7 @@ import unittest
 import numpy as np
 import matplotlib.pyplot as plt
 
-class TestF_1784(unittest.TestCase):
+class TestCases(unittest.TestCase):
     def setUp(self):
         self.fig, self.axs = f_1784()
 
@@ -77,5 +77,14 @@ class TestF_1784(unittest.TestCase):
             line = ax.lines[0]
             self.assertTrue(np.all(line.get_xdata() >= 0) and np.all(line.get_xdata() <= 2 * np.pi))
 
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
