@@ -27,7 +27,7 @@ def f_1779(df):
     >>> df = pd.DataFrame({'A': np.random.normal(0, 1, 100), 'B': np.random.exponential(1, 100)})
     >>> axes = f_1779(df)
     >>> for ax in axes:
-    ...     plt.show(ax.figure)
+    ...     plt.show()
     """
     if not isinstance(df, pd.DataFrame) or df.empty:
         raise ValueError("The input must be a non-empty pandas DataFrame.")
@@ -51,7 +51,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-class TestF_1779(unittest.TestCase):
+class TestCases(unittest.TestCase):
     def setUp(self):
         np.random.seed(42)  # Set seed for reproducibility
         self.df = pd.DataFrame({
@@ -104,8 +104,14 @@ class TestF_1779(unittest.TestCase):
             self.assertAlmostEqual(hist_min, data_min, delta=0.01, msg=f"Histogram min for {column_name} does not match")
             self.assertAlmostEqual(hist_max, data_max, delta=0.01, msg=f"Histogram max for {column_name} does not match")
 
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
 
-
-
-if __name__ == '__main__':
-    unittest.main()
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
