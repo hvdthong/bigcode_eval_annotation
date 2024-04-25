@@ -1,4 +1,5 @@
 import pandas as pd
+import os
 
 def f_3044(sheet_name, excel_file_location="test.xlsx", csv_file_location="test.csv"):
     """
@@ -16,13 +17,16 @@ def f_3044(sheet_name, excel_file_location="test.xlsx", csv_file_location="test.
     - FileNotFoundError: If the Excel file does not exist at the specified path.
     - ValueError: If the specified sheet name is not found in the Excel file.
 
-    Required Libraries:
+    Requirements:
     - pandas
+    - os
 
     Example:
-    >>> f_3044('Sheet1')
-    {'Column1': sum_value1, 'Column2': sum_value2, ...}
-
+    >>> f_3044('Sheet1') # {'Column1': sum_value1, 'Column2': sum_value2, ...}
+    Traceback (most recent call last):
+      ...
+    FileNotFoundError: Excel file not found at test.xlsx
+    
     Note:
     - Ensure the Excel file contains only numerical data for accurate sum calculations.
     """
@@ -46,7 +50,7 @@ import unittest
 import pandas as pd
 import os
 
-class TestF3044(unittest.TestCase):
+class TestCases(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         # Creating a dummy Excel file for testing
@@ -89,5 +93,14 @@ class TestF3044(unittest.TestCase):
         with open(self.test_csv_file, 'r') as file:
             self.assertNotIn('Old Data', file.read())
 
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
