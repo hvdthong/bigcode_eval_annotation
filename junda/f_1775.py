@@ -21,7 +21,7 @@ def f_1775(df):
     Requirements:
     - numpy
     - pandas
-    - sklearn.impute
+    - sklearn
     - seaborn
     - matplotlib.pyplot
     
@@ -30,7 +30,9 @@ def f_1775(df):
     >>> df.iloc[::3, -1] = np.nan  # Insert some NaN values
     >>> imputed_df, ax = f_1775(df)
     >>> ax.get_title()  # 'Boxplot of Last Column'
-    >>> ax.get_xlabel(), # 'D'
+    'Boxplot of Last Column'
+    >>> ax.get_xlabel() # 'D'
+    'D'
     """
     if not isinstance(df, pd.DataFrame) or df.empty:
         raise ValueError("Input must be a non-empty pandas DataFrame.")
@@ -43,12 +45,14 @@ def f_1775(df):
     sns.boxplot(x=df[last_col], ax=ax)
     ax.set_title('Boxplot of Last Column')
     ax.set_xlabel(last_col)
-
     return df, ax
 
 import unittest
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
 
-class TestF1775(unittest.TestCase):
+class TestCases(unittest.TestCase):
     def setUp(self):
         np.random.seed(42)
         self.df = pd.DataFrame(np.random.randint(0,100,size=(100, 4)), columns=list('ABCD'))
@@ -82,5 +86,14 @@ class TestF1775(unittest.TestCase):
 
     # Additional test cases as needed...
 
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
