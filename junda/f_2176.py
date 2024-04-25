@@ -18,7 +18,7 @@ def f_2176(image, sigma=2):
     - ValueError: If sigma is non-positive.
     - TypeError: If the input is not a numpy array.
 
-    Requires:
+    Requirements:
     - numpy
     - matplotlib.pyplot
     - scipy.ndimage
@@ -51,7 +51,7 @@ def f_2176(image, sigma=2):
 import unittest
 from skimage import data
 
-class TestF2176(unittest.TestCase):
+class TestCases(unittest.TestCase):
     def test_return_types(self):
         image = data.coins()
         ax, filtered_image = f_2176(image)
@@ -96,5 +96,14 @@ class TestF2176(unittest.TestCase):
             self.assertEqual(filtered_image.shape, img.shape, "Filtered image shape does not match original image shape")
 
 # Running the tests
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
