@@ -23,6 +23,9 @@ def f_3046(original_file_location="test.xlsx", new_file_location="new_test.xlsx"
 
     Example:
     >>> df = f_3046('test.xlsx', 'new_test.xlsx', 'Sheet1')
+    Traceback (most recent call last):
+      ...
+    FileNotFoundError: No file found at test.xlsx
     """
     if not os.path.exists(original_file_location):
         raise FileNotFoundError(f"No file found at {original_file_location}")
@@ -51,7 +54,7 @@ def create_dummy_excel(file_path='test.xlsx', sheet_name='Sheet1'):
     df = pd.DataFrame({'A': [10, 30], 'B': [20, 40]})
     df.to_excel(file_path, index=False, sheet_name=sheet_name)
 
-class TestF3046(unittest.TestCase):
+class TestCases(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
@@ -87,5 +90,14 @@ class TestF3046(unittest.TestCase):
         df = f_3046('test.xlsx', 'new_test.xlsx', 'Sheet1')
         self.assertListEqual(list(df.columns), ['A', 'B'])
 
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
