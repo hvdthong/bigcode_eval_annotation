@@ -1,8 +1,6 @@
-import pandas as pd
-import numpy as np
 import bisect
 import statistics
-import matplotlib.pyplot as plt
+import pandas as pd
 
 def f_2297(df, column, value):
     """
@@ -24,10 +22,8 @@ def f_2297(df, column, value):
 
     Requirements:
     - pandas
-    - numpy
     - bisect
     - statistics
-    - matplotlib.pyplot
     
     Example:
     >>> df = pd.DataFrame({'A': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]})
@@ -54,7 +50,7 @@ def f_2297(df, column, value):
 import unittest
 import pandas as pd
 
-class TestF2297(unittest.TestCase):
+class TestCases(unittest.TestCase):
     def setUp(self):
         self.df = pd.DataFrame({'A': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]})
 
@@ -89,5 +85,14 @@ class TestF2297(unittest.TestCase):
         self.assertEqual(num_greater, 5, "value should match the expected output")
 
 
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
 if __name__ == "__main__":
-    unittest.main()
+    import doctest
+    doctest.testmod()
+    run_tests()
