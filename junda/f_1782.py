@@ -42,9 +42,10 @@ def f_1782(df, target, random_state=42):
 
 import unittest
 import numpy as np
+import pandas as pd 
+from sklearn.linear_model import LinearRegression
 
-
-class TestF1782(unittest.TestCase):
+class TestCases(unittest.TestCase):
     def setUp(self):
         np.random.seed(0)
         self.df = pd.DataFrame({
@@ -88,5 +89,14 @@ class TestF1782(unittest.TestCase):
 
     # ... other test cases ...
 
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
