@@ -44,8 +44,9 @@ def f_2246(dic={'Lon': (-180, 180), 'Lat': (-90, 90)}, cities=['New York', 'Lond
     return gdf
 
 import unittest
+import numpy as np 
 
-class TestF2246(unittest.TestCase):
+class TestCases(unittest.TestCase):
     def test_default_parameters(self):
         np.random.seed(42)
         gdf = f_2246()
@@ -74,5 +75,14 @@ class TestF2246(unittest.TestCase):
         gdf = f_2246()
         self.assertIsInstance(gdf, gpd.GeoDataFrame)
 
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
 if __name__ == "__main__":
-    unittest.main()
+    import doctest
+    doctest.testmod()
+    run_tests()
