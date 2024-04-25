@@ -37,7 +37,19 @@ def f_1783(rows, columns=['A', 'B', 'C', 'D', 'E', 'F'], seed=42):
     Example:
         >>> df, stats = f_1783(10)
         >>> print(df)
+            A   B   C   D   E    F
+        0  52  93  15  72  61   21
+        1  83  87  75  75  88  100
+        2  24   3  22  53   2   88
+        3  30  38   2  64  60   21
+        4  33  76  58  22  89   49
+        5  91  59  42  92  60   80
+        6  15  62  62  47  62   51
+        7  55  64   3  51   7   21
+        8  73  39  18   4  89   60
+        9  14   9  90  53   2   84
         >>> print(stats)
+        {'A': {'mean': 47, 'median': 42.5}, 'B': {'mean': 53, 'median': 60.5}, 'C': {'mean': 38.7, 'median': 32.0}, 'D': {'mean': 53.3, 'median': 53.0}, 'E': {'mean': 52, 'median': 60.5}, 'F': {'mean': 57.5, 'median': 55.5}}
     """
     if not isinstance(rows, int) or rows <= 0:
         raise ValueError("rows must be a positive integer greater than 0.")
@@ -59,7 +71,7 @@ def f_1783(rows, columns=['A', 'B', 'C', 'D', 'E', 'F'], seed=42):
 import unittest
 import pandas as pd
 
-class TestF_1783(unittest.TestCase):
+class TestCases(unittest.TestCase):
     def test_dataframe_structure(self):
         df, _ = f_1783(10)
         self.assertEqual(df.shape, (10, 6))  # 10 rows, 6 columns
@@ -95,5 +107,14 @@ class TestF_1783(unittest.TestCase):
         df2, _ = f_1783(10, seed=123)
         pd.testing.assert_frame_equal(df1, df2)
 
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
