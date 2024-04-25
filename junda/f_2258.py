@@ -19,11 +19,12 @@ def f_2258(df, category_col, sales_col):
     Raises:
     - ValueError: If the DataFrame is empty, lacks numeric sales data, or contains duplicate entries in the category column.
 
+    Requirements:
+    - pandas
+    - matplotlib
+
     Example usage:
-    >>> df = pd.DataFrame({
-            'Category': ['Electronics', 'Clothing', 'Home', 'Books', 'Sports'],
-            'Sales': [1000, 1500, 1200, 800, 1100]
-        })
+    >>> df = pd.DataFrame({'Category': ['Electronics', 'Clothing', 'Home', 'Books', 'Sports'], 'Sales': [1000, 1500, 1200, 800, 1100]})
     >>> ax = f_2258(df, 'Category', 'Sales')
     """
     if df.empty or not df[sales_col].dtype.kind in 'biufc':
@@ -41,7 +42,7 @@ def f_2258(df, category_col, sales_col):
 import unittest
 import pandas as pd
 
-class TestF2258(unittest.TestCase):
+class TestCases(unittest.TestCase):
     def setUp(self):
         self.df = pd.DataFrame({
             'Category': ['Electronics', 'Clothing', 'Home', 'Books', 'Sports'],
@@ -71,6 +72,14 @@ class TestF2258(unittest.TestCase):
         with self.assertRaises(ValueError):
             f_2258(df_duplicate, 'Category', 'Sales')
 
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
 
 if __name__ == "__main__":
-    unittest.main()
+    import doctest
+    doctest.testmod()
+    run_tests()
