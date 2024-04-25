@@ -25,7 +25,7 @@ def f_1773(df):
     - numpy
     - pandas
     - matplotlib.pyplot
-    - sklearn.preprocessing.MinMaxScaler
+    - sklearn
 
     Example:
     >>> df = pd.DataFrame(np.random.randint(0, 100, size=(100, 4)), columns=list('ABCD'))
@@ -54,7 +54,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-class TestF_1773(unittest.TestCase):
+class TestCases(unittest.TestCase):
     def setUp(self):
         np.random.seed(42)
 
@@ -97,6 +97,14 @@ class TestF_1773(unittest.TestCase):
         last_col_name = df.columns[-1]
         self.assertTrue(normalized_df[last_col_name].between(0, 1).all())
 
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
 
-if __name__ == '__main__':
-    unittest.main()
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
