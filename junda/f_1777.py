@@ -33,15 +33,17 @@ def f_1777(df):
     return skewness
 
 import unittest
+import numpy as np
+import pandas as pd 
 
-class TestF1777(unittest.TestCase):
+class TestCases(unittest.TestCase):
     def setUp(self):
         np.random.seed(42)
         self.df = pd.DataFrame(np.random.randint(0, 100, size=(100, 4)), columns=list('ABCD'))
 
     def test_skewness_calculation(self):
         skewness = f_1777(self.df)
-        print(skewness)
+        # print(skewness)
         self.assertIsInstance(skewness, float)
         self.assertAlmostEqual(-0.1670862308059806, skewness)
 
@@ -65,5 +67,14 @@ class TestF1777(unittest.TestCase):
 
     # Additional test cases as needed...
 
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
