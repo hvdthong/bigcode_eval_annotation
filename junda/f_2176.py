@@ -22,6 +22,7 @@ def f_2176(image, sigma=2):
     - numpy
     - matplotlib.pyplot
     - scipy.ndimage
+    - scikit-image
 
     Example:
     >>> from skimage import data
