@@ -1,3 +1,7 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
 def f_1774(df, bins=20):
     """
     Draw a histogram of the last column of the DataFrame and return the plot.
@@ -25,6 +29,7 @@ def f_1774(df, bins=20):
     >>> ax = f_1774(df)
     >>> plt.show()
     """
+
     if not isinstance(df, pd.DataFrame) or df.empty:
         raise ValueError("The input must be a non-empty pandas DataFrame.")
 
@@ -43,7 +48,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-class TestF_1774(unittest.TestCase):
+class TestCases(unittest.TestCase):
     def setUp(self):
         np.random.seed(42)
         
@@ -85,6 +90,14 @@ class TestF_1774(unittest.TestCase):
 
         self.assertEqual(actual_frequencies, expected_frequencies)
 
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
 
-if __name__ == '__main__':
-    unittest.main()
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
