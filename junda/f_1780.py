@@ -26,6 +26,15 @@ def f_1780(df, cols):
     >>> df = pd.DataFrame({'A': np.random.normal(0, 1, 1000), 'B': np.random.exponential(1, 1000)})
     >>> df = f_1780(df, ['A', 'B'])
     >>> print(df.describe())
+                      A             B
+    count  1.000000e+03  1.000000e+03
+    mean  -1.243450e-17 -1.865175e-16
+    std    1.000500e+00  1.000500e+00
+    min   -3.040310e+00 -1.024196e+00
+    25%   -6.617441e-01 -7.183075e-01
+    50%   -1.293911e-02 -2.894497e-01
+    75%    6.607755e-01  4.095312e-01
+    max    2.841457e+00  5.353738e+00
     """
     if not isinstance(df, pd.DataFrame):
         raise ValueError("The input df must be a pandas DataFrame.")
@@ -40,8 +49,10 @@ def f_1780(df, cols):
     return df
 
 import unittest
+import numpy as np
+import pandas as pd 
 
-class TestF1780(unittest.TestCase):
+class TestCases(unittest.TestCase):
     def setUp(self):
         np.random.seed(0)
         self.df = pd.DataFrame({
@@ -77,6 +88,14 @@ class TestF1780(unittest.TestCase):
             f_1780(pd.DataFrame(), ['A', 'B'])
 
     # Additional test cases as needed...
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
 
-if __name__ == '__main__':
-    unittest.main()
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
