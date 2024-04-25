@@ -29,7 +29,8 @@ def f_2150(start_date=datetime(2023, 1, 1), end_date=datetime(2023, 12, 31), cou
 
     Example:
     >>> business_days = f_2150()
-    >>> print(business_days)
+    >>> print(business_days[0])
+    2023-01-03 00:00:00
     """
     if not isinstance(start_date, datetime) or not isinstance(end_date, datetime):
         raise ValueError("start_date and end_date must be datetime objects.")
@@ -45,7 +46,7 @@ def f_2150(start_date=datetime(2023, 1, 1), end_date=datetime(2023, 12, 31), cou
 import unittest
 from datetime import datetime
 
-class TestF2150(unittest.TestCase):
+class TestCases(unittest.TestCase):
     def test_default_dates(self):
         result = f_2150()
         self.assertIsInstance(result, list)
@@ -80,14 +81,14 @@ class TestF2150(unittest.TestCase):
         start_date = datetime(2023, 7, 3)  # Day before Independence Day
         end_date = datetime(2023, 7, 5)    # Day after Independence Day
         result = f_2150(start_date, end_date)
-        print(result)
+        # print(result)
         self.assertEqual([datetime(2023, 7, 3), datetime(2023, 7, 5)], result)  # July 4th is excluded
 
     def test_short_business_week(self):
         start_date = datetime(2023, 11, 20)  # Week of Thanksgiving
         end_date = datetime(2023, 11, 24)
         result = f_2150(start_date, end_date)
-        print(result)
+        # print(result)
         self.assertEqual([datetime(2023, 11, 20), datetime(2023, 11, 21), datetime(2023, 11, 22),datetime(2023, 11, 24)], result)
 
     def test_single_day_range_business_day(self):
@@ -100,5 +101,14 @@ class TestF2150(unittest.TestCase):
         result = f_2150(start_date, end_date)
         self.assertEqual([], result)
 
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
 if __name__ == "__main__":
-    unittest.main()
+    import doctest
+    doctest.testmod()
+    run_tests()
