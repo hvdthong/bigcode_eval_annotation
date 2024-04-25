@@ -40,7 +40,7 @@ import unittest
 import pandas as pd
 import random
 
-class TestF_1778(unittest.TestCase):
+class TestCases(unittest.TestCase):
     def setUp(self):
         self.letters = list('ABCDEFGHIJKLMNOPQRSTUVWXYZ')
         random.seed(42)
@@ -72,6 +72,14 @@ class TestF_1778(unittest.TestCase):
             expected_height = letter_counts.get(self.letters[i], 0)
             self.assertEqual(bar.get_height(), expected_height)
         
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
 
-if __name__ == '__main__':
-    unittest.main()
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
