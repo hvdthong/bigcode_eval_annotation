@@ -48,8 +48,11 @@ def f_2245(dic={'Lon': (-180, 180), 'Lat': (-90, 90)}, cities=['New York', 'Lond
     return m, df
 
 import unittest
+import numpy as np
+import pandas as pd
+import folium
 
-class TestF2245(unittest.TestCase):
+class TestCases(unittest.TestCase):
     def test_default_parameters(self):
         np.random.seed(42)
         map_obj, city_data = f_2245()
@@ -85,5 +88,14 @@ class TestF2245(unittest.TestCase):
         self.assertIsInstance(map_obj, folium.Map)
         self.assertIsInstance(city_data, pd.DataFrame)
 
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
 if __name__ == "__main__":
-    unittest.main()
+    import doctest
+    doctest.testmod()
+    run_tests()
