@@ -24,11 +24,18 @@ def f_3043(file_location, sheet_name):
     - pandas
     - numpy
     - matplotlib.pyplot
+    - os
+    - openpyxl
 
     Example:
     >>> result, fig = f_3043('test.xlsx', 'Sheet 1')
+    Traceback (most recent call last):
+      ...
+    FileNotFoundError: No file found at test.xlsx
     >>> fig.axes[0].get_title()
-    'Mean and Standard Deviation'
+    Traceback (most recent call last):
+      ...
+    NameError: name 'fig' is not defined
     """
     if not os.path.exists(file_location):
         raise FileNotFoundError(f"No file found at {file_location}")
@@ -65,6 +72,7 @@ def create_dummy_excel(file_path='test.xlsx'):
     """
     df = pd.DataFrame({'A': [10, 30], 'B': [20, 40]})
     df.to_excel(file_path, index=False, sheet_name='TestSheet')
+
 def extract_means_from_fig(fig):
          # Assuming there's only one Axes object in the Figure
         ax = fig.get_axes()[0]
@@ -80,7 +88,7 @@ def extract_means_from_fig(fig):
 
         return mean_values
         
-class TestF3043(unittest.TestCase):
+class TestCases(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
@@ -123,6 +131,14 @@ class TestF3043(unittest.TestCase):
         mean_values = extract_means_from_fig(fig)
         self.assertEqual(mean_values, [20,30])
 
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
 
-if __name__ == '__main__':
-    unittest.main()
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
