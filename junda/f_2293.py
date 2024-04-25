@@ -1,15 +1,7 @@
 import pandas as pd
 import pytz
 from datetime import datetime
-from random import randint
-import matplotlib.pyplot as plt
-import bisect
-
-import pandas as pd
-import pytz
-from datetime import datetime
 from random import randint, seed as set_seed
-import matplotlib.pyplot as plt
 
 def f_2293(
     utc_datetime,
@@ -43,10 +35,22 @@ def f_2293(
     Raises:
     - ValueError: If utc_datetime is not a datetime object or if any of the other parameters are not in the expected format.
 
+    Requirements:
+    - pandas
+    - pytz
+    - datetime
+    - random
+
     Example:
     >>> utc_time = datetime(2023, 1, 1, 12, 0, 0, tzinfo=pytz.UTC)
     >>> report = f_2293(utc_time)
     >>> print(report)
+           City                Local Time Weather Condition
+    0  New York   2023-01-01 07:00:00 EST             Sunny
+    1    London   2023-01-01 12:00:00 GMT             Sunny
+    2   Beijing   2023-01-01 20:00:00 CST             Rainy
+    3     Tokyo   2023-01-01 21:00:00 JST            Cloudy
+    4    Sydney  2023-01-01 23:00:00 AEDT            Cloudy
     """
     set_seed(seed)
     if not isinstance(utc_datetime, datetime):
@@ -68,12 +72,11 @@ def f_2293(
 
 
 import unittest
-from unittest.mock import patch
 from datetime import datetime
 import pytz
 import pandas as pd
 
-class TestF2293(unittest.TestCase):
+class TestCases(unittest.TestCase):
     def setUp(self):
         self.seed = 42
         self.utc_time = datetime(2023, 6, 15, 12, tzinfo=pytz.UTC)
@@ -128,5 +131,14 @@ class TestF2293(unittest.TestCase):
         report2 = f_2293(self.utc_time, seed=self.seed)
         pd.testing.assert_frame_equal(report1, report2)
 
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
 if __name__ == "__main__":
-    unittest.main()
+    import doctest
+    doctest.testmod()
+    run_tests()
