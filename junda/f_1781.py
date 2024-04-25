@@ -46,7 +46,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from f_1781 import f_1781  # Assuming f_1781 is defined in a separate module
 
-class TestF_1781(unittest.TestCase):
+class TestCases(unittest.TestCase):
     def setUp(self):
         np.random.seed(42)  # Set seed for reproducibility
         self.df = pd.DataFrame({
@@ -82,5 +82,14 @@ class TestF_1781(unittest.TestCase):
         ax = f_1781(self.df)
         self.assertEqual(ax.get_title(), 'Correlation Matrix Heatmap')
 
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
