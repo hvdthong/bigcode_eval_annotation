@@ -2,7 +2,6 @@ import random
 import numpy as np
 import cv2
 import matplotlib.pyplot as plt
-import unittest
 
 def f_2377(seed=42, image_size=(100, 100, 3), range_low=0, range_high=255):
     """
@@ -21,10 +20,10 @@ def f_2377(seed=42, image_size=(100, 100, 3), range_low=0, range_high=255):
     Raises:
     - ValueError: If range_low is not less than range_high.
 
-    Requires:
+    Requirements:
     - random
     - numpy
-    - cv2
+    - opencv
     - matplotlib.pyplot
 
     Example:
@@ -49,7 +48,12 @@ def f_2377(seed=42, image_size=(100, 100, 3), range_low=0, range_high=255):
     return ax, image
 
 # Unit Tests
-class TestF2377(unittest.TestCase):
+import unittest
+import random 
+import numpy as np 
+import matplotlib.pyplot as plt
+
+class TestCases(unittest.TestCase):
     def test_image_size_and_type(self):
         _, image = f_2377(image_size=(20, 20, 3))
         self.assertEqual(image.shape, (20, 20, 3), "Image size is incorrect")
@@ -80,5 +84,14 @@ class TestF2377(unittest.TestCase):
         self.assertIsInstance(image, np.ndarray, "Returned image is not a numpy array")
 
 # Running the tests
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
