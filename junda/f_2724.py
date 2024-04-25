@@ -26,8 +26,7 @@ def f_2724(df, target_col, test_size=0.2, random_state=42, epochs=10, batch_size
     - pandas
     - numpy
     - tensorflow
-    - sklearn.model_selection.train_test_split
-    - sklearn.metrics.accuracy_score
+    - sklearn
 
     Neural Network Architecture:
     - Dense layer with 64 units and ReLU activation.
@@ -35,8 +34,17 @@ def f_2724(df, target_col, test_size=0.2, random_state=42, epochs=10, batch_size
 
     Example:
     >>> df = pd.read_csv('sample_data.csv')
+    Traceback (most recent call last):
+      ...
+    FileNotFoundError: [Errno 2] No such file or directory: 'sample_data.csv'
     >>> accuracy = f_2724(df, 'target')
+    Traceback (most recent call last):
+      ...
+    NameError: name 'df' is not defined
     >>> print(accuracy)
+    Traceback (most recent call last):
+      ...
+    NameError: name 'accuracy' is not defined
     """
     if target_col not in df.columns:
         raise ValueError(f"Column '{target_col}' does not exist in DataFrame")
@@ -56,12 +64,15 @@ def f_2724(df, target_col, test_size=0.2, random_state=42, epochs=10, batch_size
     model.fit(X_train, y_train, epochs=epochs, batch_size=batch_size, verbose=0)
 
     y_pred = model.predict(X_test).round()
-
+    y_pred = y_pred.flatten()
+    y_test = np.where(y_test > 0.5, 1, 0).tolist()
     return accuracy_score(y_test, y_pred)
 
 import unittest
+import numpy as np 
+import pandas as pd 
 
-class TestF2724(unittest.TestCase):
+class TestCases(unittest.TestCase):
     def setUp(self):
         # Simulated data for testing
         np.random.seed(42)
@@ -89,5 +100,14 @@ class TestF2724(unittest.TestCase):
         accuracy = f_2724(self.df, 'target', epochs=0)
         self.assertTrue(0 <= accuracy <= 1)
 
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
 if __name__ == "__main__":
-    unittest.main()
+    import doctest
+    doctest.testmod()
+    run_tests()
