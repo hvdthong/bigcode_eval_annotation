@@ -29,7 +29,13 @@ def f_3209(directory='./', file_pattern='*.txt', regex=r'([0-9]+)'):
 
     Example:
     >>> df = f_3209('./data/', '*.txt', r'([0-9]+)')
+    Traceback (most recent call last):
+    ...
+    FileNotFoundError: The directory './data/' does not exist.
     >>> print(df)
+    Traceback (most recent call last):
+    ...
+    NameError: name 'df' is not defined
     """
     if not os.path.exists(directory):
         raise FileNotFoundError(f"The directory '{directory}' does not exist.")
@@ -53,7 +59,7 @@ import unittest
 import pandas as pd
 import os
 
-class TestF3209(unittest.TestCase):
+class TestCases(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.test_data_dir = './test_data/'
@@ -108,5 +114,14 @@ class TestF3209(unittest.TestCase):
         self.assertIn('123', df.loc[df['Filename'] == 'mixed.txt', 'Numeric Data'].values[0])
         self.assertIn('456', df.loc[df['Filename'] == 'mixed.txt', 'Numeric Data'].values[0])
 
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
