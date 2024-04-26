@@ -19,14 +19,18 @@ def f_3113(data_dir='./data/'):
     - ValueError: If there are no CSV files in the specified directory.
     - pandas.errors.EmptyDataError: If an empty CSV file is encountered.
 
-    Required Libraries:
+    Requirements:
     - pandas
     - texttable
     - os
     - glob
 
     Example:
-    >>> print(f_3113('./data/'))
+    >>> print(f_3113('./data/')) 
+    Traceback (most recent call last):
+      ...
+    FileNotFoundError: The directory './data/' does not exist.
+
     +-------------+------+--------+
     |    File     | Rows | Columns|
     +-------------+------+--------+
@@ -62,7 +66,7 @@ import unittest
 import pandas as pd
 import os
 
-class TestF3113(unittest.TestCase):
+class TestCases(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         # Setting up a dummy data directory
@@ -142,5 +146,14 @@ class TestF3113(unittest.TestCase):
         # Restore the empty CSV file
         pd.DataFrame().to_csv(self.test_data_dir + 'empty.csv', index=False)
 
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
