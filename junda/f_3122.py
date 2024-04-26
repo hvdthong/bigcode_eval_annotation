@@ -1,6 +1,5 @@
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.preprocessing import StandardScaler
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -29,6 +28,8 @@ def f_3122(file_path='arena.csv', target_column='Index', seed=42):
     - pandas: For loading and manipulating the CSV file.
     - sklearn.ensemble.RandomForestClassifier: For training the random forest model.
     - seaborn and matplotlib for plotting the feature importances.
+    - numpy 
+    - os 
 
     Example:
     The CSV file format:
@@ -38,6 +39,10 @@ def f_3122(file_path='arena.csv', target_column='Index', seed=42):
         3,20,30,40
 
     >>> ax, importances = f_3122('arena.csv', 'Index')
+    Traceback (most recent call last):
+      ...
+    FileNotFoundError: The file 'arena.csv' does not exist.
+
     This will train a random forest model predicting 'Index' from 'Score1', 'Score2', and 'Score3', 
     then plot and return the importances of 'Score1', 'Score2', and 'Score3' as features (X).
     """
@@ -78,7 +83,7 @@ import numpy as np
 from numpy.testing import assert_array_almost_equal
 
 
-class TestF3122(unittest.TestCase):
+class TestCases(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         # Create a dummy CSV for testing
@@ -139,5 +144,14 @@ class TestF3122(unittest.TestCase):
         expect = np.array([0.16335979, 0.22973545, 0.15900794, 0.18597884, 0.19796296, 0.06395503])
         assert_array_almost_equal(importances, expect, decimal=6)
 
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
