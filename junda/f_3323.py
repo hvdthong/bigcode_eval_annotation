@@ -5,7 +5,6 @@ from tensorflow.keras.optimizers import SGD
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 import pandas as pd
-import matplotlib.pyplot as plt
 
 def f_3323(dataframe: pd.DataFrame, test_size: float = 0.2, learning_rate: float = 0.1, epochs: int = 200, batch_size: int = 1) -> (keras.Model, np.ndarray):
     """
@@ -33,7 +32,6 @@ def f_3323(dataframe: pd.DataFrame, test_size: float = 0.2, learning_rate: float
     - pandas
     - sklearn.preprocessing
     - sklearn.model_selection
-    - matplotlib.pyplot
     """
     if 'target' not in dataframe.columns:
         raise ValueError("Dataframe must contain a 'target' column.")
