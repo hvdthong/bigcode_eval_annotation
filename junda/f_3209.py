@@ -20,7 +20,7 @@ def f_3209(directory='./', file_pattern='*.txt', regex=r'([0-9]+)'):
     - FileNotFoundError: If the specified directory does not exist.
     - ValueError: If no files matching the pattern are found.
 
-    Required Libraries:
+    Requirements:
     - re
     - os
     - glob

@@ -30,13 +30,6 @@ def f_3113(data_dir='./data/'):
     Traceback (most recent call last):
       ...
     FileNotFoundError: The directory './data/' does not exist.
-
-    +-------------+------+--------+
-    |    File     | Rows | Columns|
-    +-------------+------+--------+
-    | file1.csv   |  10  |   5    |
-    | file2.csv   |  20  |   3    |
-    +-------------+------+--------+
     """
     if not os.path.exists(data_dir):
         raise FileNotFoundError(f"The directory '{data_dir}' does not exist.")
