@@ -41,7 +41,7 @@ def f_3311(dataframe: pd.DataFrame) -> pd.DataFrame:
 import unittest
 import pandas as pd
 
-class TestF3311Function(unittest.TestCase):
+class TestCases(unittest.TestCase):
     
     def setUp(self):
         self.test_data = pd.DataFrame({
@@ -75,5 +75,14 @@ class TestF3311Function(unittest.TestCase):
             f_3311(df_with_non_string)
 
 # Run the tests
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
