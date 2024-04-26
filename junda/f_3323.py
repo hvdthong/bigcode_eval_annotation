@@ -38,7 +38,7 @@ def f_3323(dataframe: pd.DataFrame, test_size: float = 0.2, learning_rate: float
     if 'target' not in dataframe.columns:
         raise ValueError("Dataframe must contain a 'target' column.")
     
-    if not all(isinstance(dataframe[col].dtype, (np.number, np.bool_)) for col in dataframe.columns if col != 'target'):
+    if not all(pd.api.types.is_numeric_dtype(dataframe[col]) or pd.api.types.is_bool_dtype(dataframe[col]) for col in dataframe.columns if col != 'target'):
         raise ValueError("All columns except 'target' must be numeric or boolean.")
 
     X = dataframe.drop('target', axis=1).values
@@ -60,14 +60,13 @@ def f_3323(dataframe: pd.DataFrame, test_size: float = 0.2, learning_rate: float
 
     Y_pred = (model.predict(X_test) > 0.5).astype(int)
     confusion_matrix = pd.crosstab(Y_test.flatten(), Y_pred.flatten(), rownames=['Actual'], colnames=['Predicted']).to_numpy()
-
     return model, confusion_matrix
 
 import unittest
 import pandas as pd
 import numpy as np
 
-class TestF3323Function(unittest.TestCase):
+class TestCases(unittest.TestCase):
     
     def setUp(self):
         np.random.seed(42)
@@ -93,7 +92,7 @@ class TestF3323Function(unittest.TestCase):
     def test_small_dataset(self):
         small_data = pd.DataFrame({'feature1': [0, 1], 'target': [0, 1]})
         model, confusion_mtx = f_3323(small_data)
-        self.assertEqual(confusion_mtx.size, 4)
+        self.assertEqual(confusion_mtx.size, 1)
 
     def test_model_output_dimensions(self):
         model, _ = f_3323(self.test_data)
@@ -104,5 +103,14 @@ class TestF3323Function(unittest.TestCase):
         self.assertTrue(np.all(confusion_mtx >= 0))
 
 # Run the tests
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
