@@ -1,5 +1,4 @@
 import pandas as pd
-import matplotlib.pyplot as plt
 from random import choice, seed
 import random
 import numpy as np
@@ -17,11 +16,12 @@ def f_3587(n, students=None, courses=None, random_seed=42):
 
     Returns:
     - DataFrame: A pandas DataFrame with random grades for the students.
+    - Axes: A matplotlib Axes object of the histogram for each course.
 
     Raises:
     - ValueError: If n is not a positive integer.
 
-    Required Libraries:
+    Requirements:
     - pandas
     - matplotlib.pyplot
     - random
@@ -34,8 +34,17 @@ def f_3587(n, students=None, courses=None, random_seed=42):
     random_seed=42
     
     Example:
-    >>> grades = f_3587(10, random_seed=42)
-    >>> print(grades)
+    >>> grades, ax = f_3587(10, random_seed=42)
+    >>> print(grades.head())
+             Math  English  History  ...  Physics  Art  Computer Science
+    Student                          ...                                
+    Mary       51       87        1  ...       17   91                49
+    John       92       99       63  ...        3   59                 3
+    Thomas     14       23       59  ...       88   70                 1
+    Susan      71        2       20  ...       59   43                 5
+    Susan      60       21       32  ...       13    7                53
+    <BLANKLINE>
+    [5 rows x 8 columns]
     """
     if not isinstance(n, int) or n <= 0:
         raise ValueError("n must be a positive integer.")
@@ -64,7 +73,7 @@ def f_3587(n, students=None, courses=None, random_seed=42):
 import unittest
 import pandas as pd
 
-class TestF3587(unittest.TestCase):
+class TestCases(unittest.TestCase):
     def test_normal_functionality(self):
         df, _ = f_3587(10)
         self.assertIsInstance(df, pd.DataFrame)
@@ -99,5 +108,14 @@ class TestF3587(unittest.TestCase):
 
     # Remaining test cases can stay the same as before
 
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
