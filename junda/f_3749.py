@@ -1,8 +1,8 @@
 import pandas as pd
 from datetime import datetime, timedelta
 import locale
-import matplotlib.pyplot as plt
 from random import choice, randint, seed
+import matplotlib.axes
 
 def f_3749(start_date, end_date, num_dates, seed_value=42, countries=None, country_codes=None):
     """
@@ -23,19 +23,26 @@ def f_3749(start_date, end_date, num_dates, seed_value=42, countries=None, count
     Raises:
     ValueError: If the input parameters are invalid.
 
-    Required Libraries:
+    Requirements:
     - pandas
     - datetime
     - locale
-    - matplotlib.pyplot
     - random
+    - matplotlib.axes
 
     Plot Title and Y-axis:
     - The title of each plot will be 'Date Distribution - [Country]'
     - The y-axis label will be 'Frequency'
 
     Example:
-    >>> f_3749('01/01/2000', '01/01/2021', 1000, 42)
+    >>> _, df = f_3749('01/01/2000', '01/01/2021', 1000, 42)
+    >>> print(df.head())
+           dates  country
+    0 2014-05-05    Italy
+    1 2002-07-01  Germany
+    2 2000-07-23    Spain
+    3 2016-08-18   France
+    4 2006-03-03   France
     """
     seed(seed_value)  # Set the seed for random number generation
 
@@ -81,9 +88,9 @@ def f_3749(start_date, end_date, num_dates, seed_value=42, countries=None, count
 import unittest
 import pandas as pd
 import matplotlib.axes
-import numpy as np
 from datetime import datetime
-class TestF3749(unittest.TestCase):
+
+class TestCases(unittest.TestCase):
     def test_reproducibility_with_seed(self):
         axes1, data1 = f_3749('01/01/2000', '01/01/2021', 100, 42)
         axes2, data2 = f_3749('01/01/2000', '01/01/2021', 100, 42)
@@ -116,7 +123,14 @@ class TestF3749(unittest.TestCase):
         expect = ['2014-05-05 00:00:00,Italy', '2002-07-01 00:00:00,Russia', '2000-07-23 00:00:00,Italy', '2016-08-18 00:00:00,Spain', '2006-03-03 00:00:00,Russia', '2005-06-29 00:00:00,Russia', '2005-01-02 00:00:00,Russia', '2003-02-17 00:00:00,Germany', '2016-07-08 00:00:00,Germany', '2002-04-19 00:00:00,Italy']
         self.assertEqual(df_list, expect, "DataFrame contents should match the expected output")
 
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
 
-
-if __name__ == '__main__':
-    unittest.main()
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
