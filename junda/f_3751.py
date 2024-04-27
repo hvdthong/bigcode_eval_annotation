@@ -1,7 +1,7 @@
 import pandas as pd
 from datetime import datetime
 import locale
-import matplotlib.pyplot as plt
+import matplotlib.axes
 
 def f_3751(data, date_column, country_column, date_format, countries=None, country_codes=None):
     """
@@ -36,11 +36,16 @@ def f_3751(data, date_column, country_column, date_format, countries=None, count
     - TypeError: If `json_str` is not a string, bytes, or bytearray.
     - Exception: For other general errors related to file writing.
 
+    Requirements:
+    - pandas
+    - datetime
+    - locale
+    - matplotlib.axes
+
     Example:
-    >>> data = pd.DataFrame({'dates': ['01/01/2000', '01/02/2000', '02/03/2000', '04/05/2000', '06/07/2000'],
-                             'country': ['Russia', 'Germany', 'France', 'Spain', 'Italy']})
+    >>> data = pd.DataFrame({'dates': ['01/01/2000', '01/02/2000', '02/03/2000', '04/05/2000', '06/07/2000'], 'country': ['Russia', 'Germany', 'France', 'Spain', 'Italy']})
     >>> plots = f_3751(data, 'dates', 'country', '%d/%m/%Y')
-    >>> len(plots)
+    >>> print(len(plots))
     5
 
     Note:
@@ -87,11 +92,10 @@ def f_3751(data, date_column, country_column, date_format, countries=None, count
     return plots
 
 import unittest
-from unittest.mock import patch, mock_open
 import pandas as pd
 import matplotlib.axes
 
-class TestF3751(unittest.TestCase):
+class TestCases(unittest.TestCase):
     def setUp(self):
         self.data = pd.DataFrame({
             'dates': ['01/01/2000', '01/02/2000', '02/03/2000', '04/05/2000', '06/07/2000'],
@@ -129,9 +133,21 @@ class TestF3751(unittest.TestCase):
 
     def test_nonexistent_countries_in_data(self):
         custom_countries = ['Atlantis', 'El Dorado']  # Countries not present in the data
-        plots = f_3751(self.data, 'dates', 'country', '%d/%m/%Y', countries=custom_countries)
-        self.assertEqual(len(plots), 0)  
+        custom_country_codes = {
+            'Atlantis': 'en_US',  # Assuming these codes are for demonstrating they are handled
+            'El Dorado': 'en_US'
+            }
+        plots = f_3751(self.data, 'dates', 'country', '%d/%m/%Y', countries=custom_countries, country_codes=custom_country_codes)
+        self.assertEqual(len(plots), 0)  # Expecting no plots for non-existent countries
         
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
 
-if __name__ == '__main__':
-    unittest.main()
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
