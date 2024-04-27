@@ -26,6 +26,7 @@ def f_1723(data, target, k):
     - numpy
     - pandas
     - datetime
+    - math
 
     Example:
     >>> data = pd.DataFrame([[14, 25], [1, 22], [7, 8]], columns=['Latitude', 'Longitude'])
