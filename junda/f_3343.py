@@ -2,11 +2,7 @@ import cv2
 import numpy as np
 import os
 from sklearn.cluster import KMeans
-
-import cv2
-import numpy as np
-import os
-from sklearn.cluster import KMeans
+from PIL import Image, ImageDraw
 
 def f_3343(image_path='image.jpg', n_clusters=3, random_seed=42):
     """
@@ -31,18 +27,20 @@ def f_3343(image_path='image.jpg', n_clusters=3, random_seed=42):
     - FileNotFoundError: If the image file does not exist at the specified path.
     - ValueError: If 'n_clusters' is not a positive integer.
 
-    Required Libraries:
-    - cv2: For reading the image file and converting BGR to RGB.
+    Requirements:
+    - opencv: For reading the image file and converting BGR to RGB.
     - numpy: For array manipulations.
     - os: For checking the existence of the image file.
     - sklearn.cluster: For applying K-means clustering.
+    - pillow
 
     Example:
+    >>> create_dummy_image('image.jpg')
     >>> original_img_array, segmented_img_array = f_3343('image.jpg', 3)
-    >>> print(original_img_array.shape)
-    (height, width, 3)  # Example output
-    >>> print(segmented_img_array.shape)
-    (height, width, 3)  # Example output for n_clusters > 1
+    >>> print(original_img_array.shape) # Example output
+    (10, 10, 3)
+    >>> print(segmented_img_array.shape) # Example output for n_clusters > 1
+    (10, 10, 3)
 
     Note:
     - This function assumes the input image is in RGB format.
@@ -86,6 +84,7 @@ def f_3343(image_path='image.jpg', n_clusters=3, random_seed=42):
 import unittest
 import numpy as np
 from PIL import Image, ImageDraw
+
 def create_dummy_image(image_path='test_image.jpg', size=(10, 10)):
     """
     Creates a dummy color image for testing.
@@ -100,7 +99,7 @@ def create_dummy_image(image_path='test_image.jpg', size=(10, 10)):
     draw.point((8, 8), fill='blue')      # Blue point
 
     img.save(image_path)
-class TestF3343(unittest.TestCase):
+class TestCases(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
@@ -158,5 +157,14 @@ class TestF3343(unittest.TestCase):
         # Check if the original and segmented images are the same
         np.testing.assert_array_equal(original_img, segmented_img, "The original and segmented images should be identical when n_clusters is set to 1.")
 
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
