@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import urllib.request
 from pyquery import PyQuery as pq
 from datetime import datetime
@@ -24,9 +22,17 @@ def f_4545(url):
     ValueError: If the provided URL is invalid or empty.
     URLError: If there is an issue with network connectivity or the server.
 
+    Requirements:
+    - urllib.request
+    - pyquery
+    - datime
+    - pandas
+    - urllib.error
+
     Example:
     >>> df = f_4545('https://www.wikipedia.org')
-    >>> print(df.head())
+    >>> print(df.columns)
+    Index(['text', 'href', 'fetch_time'], dtype='object')
 
     Note:
     The function requires internet connectivity to fetch HTML content.
@@ -52,7 +58,7 @@ import unittest
 from unittest.mock import patch
 import urllib.error
 
-class TestExtractAnchorData(unittest.TestCase):
+class TestCases(unittest.TestCase):
     def test_valid_url(self):
         """ Test with a valid URL. """
         url = 'https://www.wikipedia.org'
@@ -117,6 +123,14 @@ class TestExtractAnchorData(unittest.TestCase):
         except ValueError:
             self.fail("The fetch_time column contains values not matching the format 'YYYY-MM-DD HH:MM:SS'.")
 
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
 
-if __name__ == '__main__':
-    unittest.main()
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
