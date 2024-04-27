@@ -20,8 +20,8 @@ def f_1740(df):
 
     Requirements:
         - pandas
-        - sklearn.linear_model.LinearRegression
-        - matplotlib.pyplot
+        - sklearn
+        - matplotlib
 
     Example:
         >>> df = pd.DataFrame({
