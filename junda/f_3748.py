@@ -1,7 +1,6 @@
 import pandas as pd
-from datetime import datetime
 import locale
-import matplotlib.pyplot as plt
+import matplotlib.axes
 
 def f_3748(data, date_column, country_column, countries=None, country_codes=None):
     """
@@ -24,8 +23,10 @@ def f_3748(data, date_column, country_column, countries=None, country_codes=None
     - ValueError: For invalid 'data', missing columns, or if date conversion fails.
     - KeyError: If a specified country is not in the 'country_codes' mapping.
 
-    Required Libraries:
-    - pandas, datetime, locale, matplotlib.pyplot
+    Requirements:
+    - pandas
+    - locale
+    - matplotlib.axes
 
     Example:
     >>> data = pd.DataFrame({'dates': ['01/01/2000', '01/02/2000', ...],
@@ -69,9 +70,8 @@ def f_3748(data, date_column, country_column, countries=None, country_codes=None
 import unittest
 import pandas as pd
 import matplotlib.axes
-from datetime import datetime
 
-class TestF3748(unittest.TestCase):
+class TestCases(unittest.TestCase):
     def setUp(self):
         self.data = pd.DataFrame({
             'dates': ['01/01/2000', '01/02/2000', '02/03/2000', '04/05/2000', '06/07/2000'],
@@ -112,7 +112,14 @@ class TestF3748(unittest.TestCase):
             import numpy as np
             np.testing.assert_array_almost_equal(n, expected_counts)
 
-    
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
 
-if __name__ == '__main__':
-    unittest.main()
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
