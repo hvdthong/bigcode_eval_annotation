@@ -1,7 +1,5 @@
 import cv2
 import os
-from PIL import Image
-import matplotlib.pyplot as plt
 import numpy as np
 
 def f_3388(image_file: str) -> np.ndarray:
@@ -21,12 +19,17 @@ def f_3388(image_file: str) -> np.ndarray:
     - ValueError: If the image file is not a valid image.
 
     Requirements:
-    - cv2: For reading the image file in grayscale.
+    - opencv: For reading the image file in grayscale.
     - os: For checking the existence of the image file.
     - numpy: For calculating and storing the histogram data.
 
     Example:
-    >>> histogram = f_3388('file.png')
+    >>> dummy_image_path = 'dummy_image.png'
+    >>> np.random.seed(48)
+    >>> dummy_image = np.random.randint(0, 256, (10, 10), dtype=np.uint8)
+    >>> cv2.imwrite(dummy_image_path, dummy_image)
+    True
+    >>> histogram = f_3388('dummy_image.png')
     >>> print(histogram.shape)
     (256,)
 
@@ -50,7 +53,7 @@ import unittest
 import numpy as np
 import cv2
 
-class TestF3388Function(unittest.TestCase):
+class TestCases(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         # Create a dummy grayscale image for testing
@@ -115,5 +118,14 @@ class TestF3388Function(unittest.TestCase):
 
 
 # Run the tests
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
