@@ -27,8 +27,9 @@ def f_4394(s_list, plot_path=None):
     Example:
     >>> s_list = ['apple', 'apples', 'ape', 'app', 'april']
     >>> avg_scores = f_4394(s_list, 'similarity_plot.png')
-    >>> print(len(avg_scores))
-    5
+    >>> expect = [0.7522727272727273, 0.6969696969696969, 0.6458333333333333, 0.6458333333333333, 0.5363636363636364]
+    >>> np.all(np.isclose(avg_scores, expect, atol=1e-4))
+    True
     """
     if not all(isinstance(item, str) for item in s_list):
         raise ValueError("All items in s_list must be strings.")
