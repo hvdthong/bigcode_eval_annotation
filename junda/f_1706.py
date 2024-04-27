@@ -29,6 +29,7 @@ def f_1706(df, fruits=None, days=None, seed=None, sales_lower_bound=1, sales_upp
     - numpy
     - itertools
     - datetime
+    - seaborn
 
     Example:
     >>> initial_df = pd.DataFrame()
