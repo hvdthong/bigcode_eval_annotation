@@ -1,6 +1,6 @@
 import inspect
-import types
 import pandas as pd
+import os
 
 def f_4443(f_list, file_path):
     """
@@ -21,6 +21,11 @@ def f_4443(f_list, file_path):
 
     Returns:
     None
+
+    Requirements:
+    - os
+    - inspect
+    - pandas
 
     Raises:
     - ValueError: If 'f_list' is not a list of functions, 'f_list' is empty, or 'file_path' is not a valid path.
@@ -62,7 +67,7 @@ import unittest
 import pandas as pd
 import os
 
-class TestF4443(unittest.TestCase):
+class TestCases(unittest.TestCase):
     def test_valid_input(self):
         def sample_func(x, y=1): return x + y
         f_4443([sample_func], 'test.csv')
@@ -123,7 +128,14 @@ class TestF4443(unittest.TestCase):
         self.assertFalse(df.loc[df['Function Name'] == 'func_b', 'Is Lambda'].values[0])
         self.assertTrue(df.loc[df['Function Name'] == '<lambda>', 'Is Lambda'].values[0])
 
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
 
-
-if __name__ == '__main__':
-    unittest.main()
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
