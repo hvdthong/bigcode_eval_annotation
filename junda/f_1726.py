@@ -49,7 +49,7 @@ def f_1726(data, n_clusters=3):
 import unittest
 from matplotlib.collections import PathCollection  # Correct import
 
-class TestF_1726(unittest.TestCase):
+class TestCases(unittest.TestCase):
     def setUp(self):
         np.random.seed(42)
         self.data = pd.DataFrame(np.random.rand(100, 2), columns=['Feature1', 'Feature2'])
@@ -86,6 +86,15 @@ class TestF_1726(unittest.TestCase):
         unique_labels = np.unique(labels)
         self.assertEqual(len(unique_labels), 3)  # Checking if 3 unique labels are returned
 
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
 
