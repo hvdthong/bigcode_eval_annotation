@@ -19,10 +19,19 @@ def f_4493(csv_file):
     FileNotFoundError: If the CSV file cannot be found at the specified path.
     IOError: If there is an error in reading the file.
 
+    Requirements:
+    - unicodedata
+    - csv
+    - collections
+    - matplotlib.pyplot
+    - matplotlib.axes
+
+
     Example:
-    >>> ax, most_common_words = f_4493('/path/to/file.csv')
+    >>> create_dummy_csv_file()
+    >>> ax, most_common_words = f_4493('dummy.csv')
     >>> type(ax)
-    <class 'matplotlib.axes._subplots.AxesSubplot'>
+    <class 'matplotlib.axes._axes.Axes'>
     >>> type(most_common_words)
     <class 'list'>
 
@@ -54,11 +63,20 @@ import unittest
 from unittest.mock import patch, mock_open
 import matplotlib.axes
 
-import unittest
-from unittest.mock import patch, mock_open
-import matplotlib.axes
+def create_dummy_csv_file(filepath='dummy.csv'):
+    # Data to be written into the CSV file
+    data = [
+        ['word1', 'word2', 'word3', 'word4'],
+        ['word2', 'word3', 'word3', 'word5'],
+        ['word6', 'word7', 'word8', 'word1']
+    ]
 
-class TestF4493(unittest.TestCase):
+    # Write data to CSV
+    with open(filepath, 'w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerows(data)
+
+class TestCases(unittest.TestCase):
     def test_valid_csv_file(self):
         """ Test with a valid CSV file. """
         with patch('builtins.open', mock_open(read_data="word1,word2\nword3,word4")):
@@ -94,10 +112,14 @@ class TestF4493(unittest.TestCase):
             # Check if 'Café' is normalized to 'Cafe'
             self.assertIn(('Cafe', 2), most_common_words)  # Directly check most_common_words
 
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
 
-
-
-if __name__ == '__main__':
-    unittest.main()
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
