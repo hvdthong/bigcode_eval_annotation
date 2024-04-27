@@ -1,7 +1,7 @@
+
 from scipy.stats import linregress
 import matplotlib.pyplot as plt
 import pandas as pd
-import warnings
 
 def f_1725(data, column1, column2):
     """
@@ -24,7 +24,6 @@ def f_1725(data, column1, column2):
     - scipy.stats
     - matplotlib.pyplot
     - pandas
-    - warnings
 
     Example:
     >>> data = pd.DataFrame([[14, 25], [1, 22], [7, 8]], columns=['Column1', 'Column2'])
@@ -36,9 +35,7 @@ def f_1725(data, column1, column2):
     x = data[column1].values
     y = data[column2].values
 
-    with warnings.catch_warnings():
-        warnings.simplefilter("ignore", category=RuntimeWarning)
-        slope, intercept, r_value, p_value, std_err = linregress(x, y)
+    slope, intercept, r_value, p_value, std_err = linregress(x, y)
 
     fig, ax = plt.subplots()
     ax.plot(x, y, 'o', label='original data')
@@ -48,6 +45,7 @@ def f_1725(data, column1, column2):
     return (slope, intercept, r_value, p_value, std_err), ax
 
 import unittest
+import pandas as pd
 
 class TestCases(unittest.TestCase):
     def setUp(self):
