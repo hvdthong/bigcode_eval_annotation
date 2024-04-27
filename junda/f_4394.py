@@ -19,10 +19,16 @@ def f_4394(s_list, plot_path=None):
     ValueError: If `s_list` is not a list of strings.
     Return numpy.nan if the list contains a single element
 
+    Requirements:
+    - numpy
+    - difflib
+    - matplotlib.pyplot as plt
+
     Example:
     >>> s_list = ['apple', 'apples', 'ape', 'app', 'april']
     >>> avg_scores = f_4394(s_list, 'similarity_plot.png')
-    >>> print(avg_scores)
+    >>> print(len(avg_scores))
+    5
     """
     if not all(isinstance(item, str) for item in s_list):
         raise ValueError("All items in s_list must be strings.")
@@ -41,7 +47,7 @@ def f_4394(s_list, plot_path=None):
 
 import unittest
 
-class TestFunction4394(unittest.TestCase):
+class TestCases(unittest.TestCase):
     def test_average_similarity(self):
         s_list = ['apple', 'apples', 'ape', 'app', 'april']
         expected_length = len(s_list)
@@ -71,5 +77,14 @@ class TestFunction4394(unittest.TestCase):
         self.assertTrue(os.path.exists(plot_path))
         os.remove(plot_path)
 
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
