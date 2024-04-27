@@ -1,8 +1,7 @@
 import pandas as pd
-from datetime import datetime
 import locale
-import matplotlib.pyplot as plt
-
+import matplotlib.axes
+import numpy as np 
 
 def f_3750(data, date_column, country_column, date_format, countries=None, country_codes=None):
     """
@@ -27,6 +26,12 @@ def f_3750(data, date_column, country_column, date_format, countries=None, count
     Raises:
     - ValueError: For incorrect data structure types or missing DataFrame columns.
 
+    Requirements:
+    - pandas
+    - locale
+    - numpy
+    - matplotlib.axes
+
     Notes:
     - Handles missing country codes by using a default locale (en_US).
     - Nonexistent countries in the provided 'countries' list or DataFrame will not 
@@ -35,10 +40,7 @@ def f_3750(data, date_column, country_column, date_format, countries=None, count
     - Requires pandas, datetime, locale, and matplotlib.pyplot libraries.
 
     Example usage:
-    >>> data = pd.DataFrame({
-            'dates': ['01/01/2000', '01/02/2000'],
-            'country': ['Russia', 'Germany']
-        })
+    >>> data = pd.DataFrame({'dates': ['01/01/2000', '01/02/2000'], 'country': ['Russia', 'Germany']})
     >>> axes = f_3750(data, 'dates', 'country', '%d/%m/%Y')
     >>> list(axes.keys())
     ['Russia', 'Germany']
@@ -83,7 +85,7 @@ import matplotlib.axes
 import numpy as np
 
 
-class TestF3750(unittest.TestCase):
+class TestCases(unittest.TestCase):
     def setUp(self):
         self.data = pd.DataFrame({
             'dates': ['01/01/2000', '01/02/2000', '01/03/2000', '01/04/2000', '01/05/2000'],
@@ -127,6 +129,14 @@ class TestF3750(unittest.TestCase):
         # Compare actual with expected counts
         np.testing.assert_array_equal(n, [0,0,1,0,0])
 
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
 
-if __name__ == '__main__':
-    unittest.main()
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
