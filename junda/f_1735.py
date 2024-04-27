@@ -1,8 +1,8 @@
 import matplotlib.pyplot as plt
-import os
 import pandas as pd
 import seaborn as sns
 from sklearn.datasets import load_boston
+    
 
 def f_1735(seed=42):
     """
@@ -23,12 +23,12 @@ def f_1735(seed=42):
         - os
         - pandas
         - seaborn
-        - sklearn.datasets
+        - sklearn.datasets (scikit-learn==1.1.1)
 
     Example:
         >>> ax = f_1735()
         >>> type(ax)
-        <class 'matplotlib.axes._subplots.AxesSubplot'>
+        <class 'matplotlib.axes._axes.Axes'>
     """
     try:
         # Set font to Arial
@@ -53,7 +53,7 @@ def f_1735(seed=42):
 import unittest
 import matplotlib.pyplot as plt
 
-class TestF1735(unittest.TestCase):
+class TestCases(unittest.TestCase):
 
     def test_basic_functionality(self):
         ax = f_1735()
@@ -77,5 +77,14 @@ class TestF1735(unittest.TestCase):
         self.assertEqual(ax.get_ylabel(), "")
         self.assertEqual(ax.get_title(), "")
 
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
