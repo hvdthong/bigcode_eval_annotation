@@ -1,7 +1,7 @@
 import pandas as pd
 from datetime import datetime
 import locale
-import matplotlib.pyplot as plt
+import matplotlib.axes
 
 def f_3747(data, date_format, country, country_codes=None):
     """
@@ -31,11 +31,11 @@ def f_3747(data, date_format, country, country_codes=None):
     Additional Notes:
     The title of the plot should be 'Date Distribution'. The y label should be named with 'Frequency'.
     
-    Required Libraries:
+    Requirements:
     - pandas
     - datetime
     - locale
-    - matplotlib.pyplot
+    - matplotlib.axes
 
     Example:
     >>> data = pd.DataFrame({'dates': ['01/01/2000', '01/02/2000', '02/03/2000', '04/05/2000', '06/07/2000']})
@@ -76,7 +76,7 @@ import matplotlib.axes
 import numpy as np
 from datetime import datetime
 
-class TestF3747(unittest.TestCase):
+class TestCases(unittest.TestCase):
     def setUp(self):
         self.data = pd.DataFrame({'dates': ['01/01/2000', '01/02/2000', '02/03/2000', '04/05/2000', '06/07/2000']})
 
@@ -115,6 +115,14 @@ class TestF3747(unittest.TestCase):
         # Compare the actual frequencies with the expected frequencies
         np.testing.assert_array_almost_equal(n, expected_counts)
 
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
 
-if __name__ == '__main__':
-    unittest.main()
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
