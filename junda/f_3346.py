@@ -18,15 +18,17 @@ def f_3346(image_path='image.jpg', threshold=128):
     - FileNotFoundError: If the image file does not exist at the specified path.
     - ValueError: If the threshold is not an integer or not in the range 0-255.
 
-    Required Libraries:
-    - cv2
+    Requirements:
+    - opencv
     - numpy
     - os
+    - pillow
 
     Example:
+    >>> create_dummy_image('image.jpg')
     >>> original_img_array, binary_img_array = f_3346('image.jpg', 128)
-    >>> original_img_array.shape, binary_img_array.shape
-    ((image_height, image_width), (image_height, image_width))
+    >>> original_img_array.shape, binary_img_array.shape # ((image_height, image_width), (image_height, image_width))
+    ((20, 20), (20, 20))
     """
 
     if not isinstance(threshold, int) or not (0 <= threshold <= 255):
@@ -59,7 +61,7 @@ def create_dummy_image(image_path='test_image.jpg', size=(20, 20)):
     draw.line([2, 15, 18, 15], fill='black', width=1)
     img.save(image_path)
 
-class TestF3342(unittest.TestCase):
+class TestCases(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         create_dummy_image()
@@ -107,5 +109,15 @@ class TestF3342(unittest.TestCase):
 
         # Check if array1 is not equal to array3 (they are not)
         self.assertTrue(np.array_equal(binary_img_list, expect_binary), "The arrays should not be equal")
-if __name__ == '__main__':
-    unittest.main()
+
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
