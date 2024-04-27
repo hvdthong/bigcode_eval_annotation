@@ -1,7 +1,6 @@
 import xlwt
 import os
 import pandas as pd
-import json
 
 def f_3958(json_str, filename, sheet_name="sheet1"):
     """
@@ -22,15 +21,17 @@ def f_3958(json_str, filename, sheet_name="sheet1"):
     - TypeError: If `json_str` is not a string, bytes, or bytearray.
     - Exception: For other general errors related to file writing.
 
-    Required Libraries:
+    Requirements:
     - xlwt: For writing to Excel files.
+    - xlrd
     - os: For file path operations.
     - pandas: For data manipulation.
-    - json: For JSON parsing.
+
 
     Example:
     >>> json_str = '[{"Name": "John", "Age": 30}, {"Name": "Jane", "Age": 28}]'
-    >>> f_3958(json_str, 'data.xls')
+    >>> True if f_3958(json_str, 'data.xls').endswith('data.xls') else False # True
+    True
     """
     
     if not isinstance(json_str, (str, bytes, bytearray)):
@@ -60,9 +61,8 @@ def f_3958(json_str, filename, sheet_name="sheet1"):
 import unittest
 import pandas as pd
 import os
-import json
 
-class TestFunction3958(unittest.TestCase):
+class TestCases(unittest.TestCase):
     def test_valid_json(self):
         json_str = '[{"Name": "John", "Age": 30}, {"Name": "Jane", "Age": 28}]'
         file_path = f_3958(json_str, 'test_valid.xls')
@@ -106,5 +106,14 @@ class TestFunction3958(unittest.TestCase):
 
         os.remove(file_path)
 
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
