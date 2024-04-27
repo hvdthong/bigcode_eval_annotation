@@ -29,13 +29,21 @@ def f_3991(file_path1, file_path2, delimiter=',', quotechar='"'):
     ValueError: If either of the files is empty.
     Exception: For other IO related errors.
 
-    Required Libraries:
+    Requirements:
     - pandas: For data manipulation and analysis.
     - csv: For reading CSV files.
     - difflib: For performing the difference operation.
+    - os 
 
     Example:
-    >>> f_3991('file1.csv', 'file2.csv')
+    >>> create_dummy_test_files()
+    >>> df = f_3991('file1.csv', 'file2.csv')
+    >>> df.head()
+       Line Number Status          Content
+    0            1         ('name', 'age')
+    1            2      -  ('Alice', '30')
+    2            3      +  ('Alice', '31')
+    3            4           ('Bob', '25')
     """
 
     def csv_to_list(file_path, delimiter=',', quotechar='"'):
@@ -74,7 +82,23 @@ import pandas as pd
 import os
 import csv
 
-class TestFunction3991(unittest.TestCase):
+def create_dummy_test_files():
+    # Data for files with default delimiter (',')
+    data1 = [["name", "age"], ["Alice", "30"], ["Bob", "25"]]
+    data2 = [["name", "age"], ["Alice", "31"], ["Bob", "25"]]
+
+    # File paths for custom delimiter files
+    test_file1 = 'file1.csv'
+    test_file2 = 'file2.csv'
+
+    # Create files with default delimiter (',')
+    with open(test_file1, 'w', newline='') as f1, open(test_file2, 'w', newline='') as f2:
+        writer1 = csv.writer(f1)
+        writer2 = csv.writer(f2)
+        writer1.writerows(data1)
+        writer2.writerows(data2)
+
+class TestCases(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         # Setup test CSV files
@@ -154,5 +178,14 @@ class TestFunction3991(unittest.TestCase):
         os.remove(cls.empty_file1)
         os.remove(cls.empty_file2)
 
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
