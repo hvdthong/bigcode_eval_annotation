@@ -17,9 +17,10 @@ def f_3599(template_path, output_file_path, context):
     - FileNotFoundError: If the template file does not exist.
     - ValueError: If the context is not a dictionary.
 
-    Required Libraries:
+    Requirements:
     - docxtpl: For generating Word documents from templates. Ensures dynamic content can be inserted into the document based on the provided context.
     - os: For file path operations, including checking the existence of the template file.
+    - python-docx
 
     Example:
     Consider you have a template Word document ('template.docx') that contains placeholders for a title and a body, formatted as follows:
@@ -32,6 +33,7 @@ def f_3599(template_path, output_file_path, context):
     >>> context = {'title': 'Document Title', 'body': 'This is the body of the document.'}
 
     Call the function:
+    >>> create_dummy_template(template_path='template.docx')
     >>> f_3599('template.docx', 'output.docx', context)
 
     This will replace the placeholders in the template with the values from the context dictionary and save the resulting document to 'output.docx'.
@@ -50,7 +52,33 @@ import unittest
 from unittest.mock import patch, MagicMock, mock_open
 from docxtpl import DocxTemplate
 
-class TestF3599(unittest.TestCase):
+def create_dummy_template(template_path='template.docx'):
+    from docx import Document
+    from docx.shared import Pt
+    from docx.enum.text import WD_ALIGN_PARAGRAPH
+    
+    # Create a new Document
+    doc = Document()
+    
+    # Add a title placeholder
+    title = doc.add_paragraph()
+    title_run = title.add_run('{{ title }}')
+    title_run.bold = True
+    title_run.font.size = Pt(24)  # Set font size
+    title.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    
+    # Add some space
+    doc.add_paragraph()
+    
+    # Add a body placeholder
+    body = doc.add_paragraph()
+    body_run = body.add_run('{{ body }}')
+    body_run.font.size = Pt(12)  # Set font size
+
+    # Save the document
+    doc.save('template.docx')
+
+class TestCases(unittest.TestCase):
     def setUp(self):
         self.template_path = 'template.docx'
         self.output_file_path = 'output.docx'
@@ -108,7 +136,15 @@ class TestF3599(unittest.TestCase):
         mock_render.assert_called_once_with(self.expected_render_context)
         mock_save.assert_called_once()
 
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
 
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
 
