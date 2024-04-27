@@ -57,7 +57,7 @@ def f_1739(df):
 import unittest
 
 
-class TestF1739(unittest.TestCase):
+class TestCases(unittest.TestCase):
 
     def setUp(self):
         self.valid_df = pd.DataFrame({
@@ -105,5 +105,14 @@ class TestF1739(unittest.TestCase):
         np.testing.assert_array_almost_equal(heatmap_data_reshaped, expected_corr_matrix)
 
 
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
