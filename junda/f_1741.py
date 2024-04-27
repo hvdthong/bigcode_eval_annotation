@@ -1,5 +1,4 @@
 import pandas as pd
-import numpy as np
 from sklearn.cluster import KMeans
 import matplotlib.pyplot as plt
 
@@ -20,6 +19,7 @@ def f_1741(df, n_clusters=3, random_state=0):
         x: 'Date (ordinal)'
         ylabel: 'Value'
         title: 'KMeans Clustering of Value vs Date'
+    
     Raises:
         ValueError: If the DataFrame is empty or lacks required columns.
 
@@ -59,8 +59,9 @@ def f_1741(df, n_clusters=3, random_state=0):
     return ax
 
 import unittest
+import pandas as pd
 
-class TestF1741(unittest.TestCase):
+class TestCases(unittest.TestCase):
 
     def setUp(self):
         self.df = pd.DataFrame({
@@ -95,5 +96,14 @@ class TestF1741(unittest.TestCase):
         self.assertEqual(ax.get_title(), 'KMeans Clustering of Value vs Date')
 
 
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
