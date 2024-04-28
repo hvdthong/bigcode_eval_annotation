@@ -26,9 +26,17 @@ def f_1761(my_list, file_dir='./data_files/', file_ext='.csv'):
     - glob
 
     Example:
+    >>> create_dummy_csv()
     >>> my_list = [1, 2, 3]
     >>> df = f_1761(my_list)
-    >>> print(df)
+    >>> print(df.head())
+       A  B
+    0  0  3
+    1  1  4
+    2  2  5
+    3  0  3
+    4  1  4
+    >>> tearDown_dummy()
     """
     if not isinstance(my_list, list):
         raise TypeError("my_list must be a list.")
@@ -49,7 +57,21 @@ import unittest
 import pandas as pd
 import os
 
-class TestF_1761(unittest.TestCase):
+def create_dummy_csv():
+    test_dir = './data_files/'
+    os.makedirs(test_dir, exist_ok=True)
+    for i in range(3):
+        df = pd.DataFrame({'A': range(3), 'B': range(3, 6)})
+        df.to_csv(f'{test_dir}file_{i}.csv', index=False)
+
+def tearDown_dummy():
+    # Clean up the test directory and its contents
+    test_dir = './data_files/'
+    for file in os.listdir(test_dir):
+        os.remove(os.path.join(test_dir, file))
+    os.rmdir(test_dir)
+
+class TestCases(unittest.TestCase):
     def setUp(self):
         # Setup for creating sample CSV files in a test directory
         self.test_dir = './test_data_files/'
@@ -91,5 +113,14 @@ class TestF_1761(unittest.TestCase):
         # Expecting to concatenate 1 + 12 = 13 files, but only 3 are available
         self.assertEqual(len(df), 9)  # 3 rows per file
 
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
