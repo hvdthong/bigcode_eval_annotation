@@ -20,7 +20,7 @@ def f_1747(df):
 
     Requirements:
     - pandas
-    - numpy
+    - random
     - matplotlib.pyplot
     
     Example:
