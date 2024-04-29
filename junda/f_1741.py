@@ -25,7 +25,6 @@ def f_1741(df, n_clusters=3, random_state=0):
 
     Requirements:
         - pandas
-        - numpy
         - sklearn.cluster
         - matplotlib.pyplot
 
