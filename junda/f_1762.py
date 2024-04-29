@@ -37,8 +37,8 @@ def f_1762(my_list, size=100, seed=100):
     Example:
     >>> my_list = [2, 3, 5]
     >>> time_taken, ax = f_1762(my_list)
-    >>> print(round(time_taken, 5))  # Example output: 2e-05
-    2e-05
+    >>> print(type(time_taken))  # Example output: <class 'float'>
+    <class 'float'>
     >>> ax.get_title()  # Returns 'Histogram of Random Numbers'
     'Histogram of Random Numbers'
     """
