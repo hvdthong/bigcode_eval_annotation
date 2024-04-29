@@ -31,14 +31,11 @@ def f_1766(url='http://example.com'):
     - bs4
 
     Example usage:
-    >>> df = f_1766()
-    Traceback (most recent call last):
-      ...
-    ValueError: Error parsing the page content: No table found on the page.
+    >>> df = f_1766('https://en.wikipedia.org/wiki/List_of_countries_by_GDP_(nominal)')
     >>> print(df)
-    Traceback (most recent call last):
-      ...
-    NameError: name 'df' is not defined
+                                                       0
+    0                                                   
+    1  Largest economies in the world by GDP (nominal...
     """
     try:
         response = requests.get(url)
