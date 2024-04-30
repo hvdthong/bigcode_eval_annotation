@@ -22,13 +22,21 @@ def f_2221(img_path, scale_factors=[0.5, 0.75, 1.5, 2.0]):
     Requirements:
     - PIL
     - numpy
-    - skimage.transform
+    - scikit-image
     - matplotlib.pyplot
+    - os
 
     Example:
+    >>> dummy_img_path = "sample.png"
+    >>> Image.fromarray(np.random.randint(0, 255, (20, 20, 3), dtype=np.uint8)).save(dummy_img_path)
     >>> result = f_2221('sample.png')
+    >>> os.remove(dummy_img_path)
     >>> for ax, img in result:
     ...     print(ax.get_title(), img.shape)
+    Scale factor: 0.5 (10, 10, 3)
+    Scale factor: 0.75 (15, 15, 3)
+    Scale factor: 1.5 (30, 30, 3)
+    Scale factor: 2.0 (40, 40, 3)
     """
     if not os.path.exists(img_path):
         raise FileNotFoundError(f"No file found at {img_path}")
@@ -51,7 +59,7 @@ import unittest
 from PIL import Image
 import numpy as np
 
-class TestF2221(unittest.TestCase):
+class TestCases(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         # Create a dummy image for testing
@@ -84,6 +92,14 @@ class TestF2221(unittest.TestCase):
         with self.assertRaises(FileNotFoundError):
             f_2221("nonexistent.png")
 
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
 
 if __name__ == "__main__":
-    unittest.main()
+    import doctest
+    doctest.testmod()
+    run_tests()
