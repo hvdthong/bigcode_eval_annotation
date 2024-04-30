@@ -1,6 +1,8 @@
 import os
 import pandas as pd
 import folium
+import tempfile
+import shutil
 
 def f_2612(dirname, outfile, columns=['Latitude', 'Longitude', 'Value']):
     """
@@ -23,9 +25,13 @@ def f_2612(dirname, outfile, columns=['Latitude', 'Longitude', 'Value']):
     - os
     - pandas
     - folium
+    - tempfile
+    - shutil
 
     Example:
-    >>> map_obj = f_2612('./geo_data/', 'map.html')
+    >>> tmp_dir = create_dummy_csv_files()
+    >>> map_obj = f_2612(tmp_dir, 'map.html')
+    >>> shutil.rmtree(tmp_dir)
     """
     if not os.path.exists(dirname):
         raise FileNotFoundError(f"Directory '{dirname}' does not exist")
@@ -62,7 +68,15 @@ import unittest
 import tempfile
 import shutil
 
-class TestF2612(unittest.TestCase):
+def create_dummy_csv_files():
+    temp_dir = tempfile.mkdtemp()
+    for i in range(3):
+        data = {'Latitude': [i, i+1], 'Longitude': [i+2, i+3], 'Value': [i*10, (i+1)*10]}
+        df = pd.DataFrame(data)
+        df.to_csv(os.path.join(temp_dir, f'dummy{i}.csv'), index=False, header=False)
+    return temp_dir
+
+class TestCases(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         # Create a temporary directory with dummy CSV files
@@ -120,5 +134,14 @@ class TestF2612(unittest.TestCase):
         map_obj = f_2612(self.temp_dir1, 'test_map.html', columns=custom_columns)
         self.assertIsInstance(map_obj, folium.Map)
 
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
 if __name__ == "__main__":
-    unittest.main()
+    import doctest
+    doctest.testmod()
+    run_tests()
