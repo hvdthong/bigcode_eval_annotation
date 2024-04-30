@@ -1,5 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import random
 
 def f_1778(df, letters=list('ABCDEFGHIJKLMNOPQRSTUVWXYZ')):
     """
@@ -19,6 +20,7 @@ def f_1778(df, letters=list('ABCDEFGHIJKLMNOPQRSTUVWXYZ')):
     Requirements:
     - pandas
     - matplotlib.pyplot
+    - random
 
     Example:
     >>> df = pd.DataFrame({'Letters': random.choices('ABCDEFGHIJKLMNOPQRSTUVWXYZ', k=100)})
