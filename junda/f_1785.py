@@ -15,6 +15,11 @@ def f_1785(data=np.random.normal(loc=10, scale=5, size=100), seed=0):
     - mu (float): Estimated mean of the distribution.
     - sigma (float): Estimated standard deviation of the distribution.
 
+    Requirements:
+    - numpy
+    - matplotlib.pyplot
+    - scipy
+
     Example:
     >>> np.random.seed(0)  # Setting seed for reproducibility
     >>> data = np.random.normal(loc=10, scale=5, size=100)
@@ -44,6 +49,7 @@ def f_1785(data=np.random.normal(loc=10, scale=5, size=100), seed=0):
     plt.show()
 
     return ax, mu, sigma
+
 import unittest
 import numpy as np
 import matplotlib.pyplot as plt
@@ -51,7 +57,7 @@ from scipy import stats
 
 # Assuming f_1785 is defined as previously described
 
-class TestF1785(unittest.TestCase):
+class TestCases(unittest.TestCase):
     def setUp(self):
         # Seed set for reproducibility in tests
         np.random.seed(0)
@@ -92,5 +98,14 @@ class TestF1785(unittest.TestCase):
         self.assertEqual(mu1, mu2, "Mu should be the same for the same seed")
         self.assertEqual(sigma1, sigma2, "Sigma should be the same for the same seed")
 
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
