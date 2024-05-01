@@ -19,15 +19,48 @@ def f_3287(excel_directory: str, file_pattern: str) -> List[pd.DataFrame]:
     FileNotFoundError: If the specified directory does not exist.
     ValueError: If no files match the given pattern.
 
-    Example:
-    >>> df_list = f_3287('/path/to/excel/files/', 'excel_file*.xls')
-    >>> for df in df_list:
-    >>>     print(df.head())
-
     Requirements:
     - os
     - glob
     - pandas
+    - typing
+
+    Example:
+    >>> data_dir = 'excel_files'
+    >>> create_dummy_excel_files(data_dir)
+    >>> df_list = f_3287(data_dir, 'file*.xls')
+    >>> for df in df_list:
+    ...     print(df.head())
+       Unnamed: 0         0         1         2
+    0           0  0.318569  0.667410  0.131798
+    1           1  0.716327  0.289406  0.183191
+    2           2  0.586513  0.020108  0.828940
+    3           3  0.004695  0.677817  0.270008
+    4           4  0.735194  0.962189  0.248753
+       Unnamed: 0         0         1         2
+    0           0  0.158970  0.110375  0.656330
+    1           1  0.138183  0.196582  0.368725
+    2           2  0.820993  0.097101  0.837945
+    3           3  0.096098  0.976459  0.468651
+    4           4  0.976761  0.604846  0.739264
+       Unnamed: 0         0         1         2
+    0           0  0.548814  0.715189  0.602763
+    1           1  0.544883  0.423655  0.645894
+    2           2  0.437587  0.891773  0.963663
+    3           3  0.383442  0.791725  0.528895
+    4           4  0.568045  0.925597  0.071036
+       Unnamed: 0         0         1         2
+    0           0  0.264556  0.774234  0.456150
+    1           1  0.568434  0.018790  0.617635
+    2           2  0.612096  0.616934  0.943748
+    3           3  0.681820  0.359508  0.437032
+    4           4  0.697631  0.060225  0.666767
+       Unnamed: 0         0         1         2
+    0           0  0.725254  0.501324  0.956084
+    1           1  0.643990  0.423855  0.606393
+    2           2  0.019193  0.301575  0.660174
+    3           3  0.290078  0.618015  0.428769
+    4           4  0.135474  0.298282  0.569965
     """
     if not os.path.exists(excel_directory):
         raise FileNotFoundError(f"The directory {excel_directory} does not exist.")
@@ -50,7 +83,18 @@ import numpy as np
 import pandas as pd
 import os
 
-class TestF3287Function(unittest.TestCase):
+def create_dummy_excel_files(data_dir):
+    os.makedirs(data_dir, exist_ok=True)
+    np.random.seed(0)
+    for i in range(5):
+        pd.DataFrame(np.random.rand(10, 3)).to_excel(os.path.join(data_dir, f'file_{i}.xls'))
+
+def tear_down_excel_files(data_dir):
+    for file in os.listdir(data_dir):
+        os.remove(os.path.join(data_dir, file))
+    os.rmdir(data_dir)
+
+class TestCases(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         # Create dummy Excel files for testing
@@ -106,5 +150,14 @@ class TestF3287Function(unittest.TestCase):
         os.rmdir(empty_dir)
 
 # Run the tests
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
