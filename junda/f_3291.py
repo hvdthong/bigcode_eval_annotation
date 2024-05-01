@@ -21,13 +21,24 @@ def f_3291(excel_directory: str, file_name: str, column_name: str, start_date: s
     ValueError: If start_date or end_date are in an incorrect format, or if column_name does not exist in the DataFrame.
 
     Example:
-    >>> filtered_df = f_3291('/path/to/excel/files/', 'excel_file1.xls', 'Date', '2020-01-01', '2020-12-31')
-    >>> print(filtered_df)
-
+    >>> data_dir, file_name = './excel_files/', 'excel_file1.xls'
+    >>> test_file = create_dummy_file(data_dir, file_name)
+    >>> filtered_df = f_3291(data_dir, file_name, 'Date', '2020-01-01', '2020-12-31')
+    >>> os.remove(test_file)
+    >>> os.rmdir(data_dir)
+    >>> print(filtered_df.head())
+       Unnamed: 0       Date     Value
+    0           0 2020-01-01  0.823110
+    1           1 2020-01-02  0.026118
+    2           2 2020-01-03  0.210771
+    3           3 2020-01-04  0.618422
+    4           4 2020-01-05  0.098284
+    
     Requirements:
     - os
     - pandas
     - datetime
+    - numpy
     """
     excel_file = os.path.join(excel_directory, file_name)
     if not os.path.exists(excel_file):
@@ -55,7 +66,18 @@ import numpy as np
 import os
 from datetime import datetime
 
-class TestF3291Function(unittest.TestCase):
+def create_dummy_file(data_dir, file_name):
+    os.makedirs(data_dir, exist_ok=True)
+    np.random.seed(52)
+    test_data = pd.DataFrame({
+        'Date': pd.date_range(start='2020-01-01', periods=100, freq='D'),
+        'Value': np.random.rand(100)
+    })
+    test_file = os.path.join(data_dir, file_name)
+    test_data.to_excel(test_file)
+    return test_file
+
+class TestCases(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         # Create dummy Excel file for testing
@@ -106,5 +128,14 @@ class TestF3291Function(unittest.TestCase):
         self.assertEqual(len(filtered_df), 0)
 
 # Run the tests
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
