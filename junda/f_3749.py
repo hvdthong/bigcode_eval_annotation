@@ -117,8 +117,8 @@ class TestCases(unittest.TestCase):
         axes, data = f_3749('01/01/2000', '01/01/2021', num_dates, seed_value=42)
         df_list = data.apply(lambda row: ','.join(row.values.astype(str)), axis=1).tolist()
         
-        with open('df_contents.txt', 'w') as file:
-            file.write(str(df_list))
+        # with open('df_contents.txt', 'w') as file:
+        #     file.write(str(df_list))
         
         expect = ['2014-05-05 00:00:00,Italy', '2002-07-01 00:00:00,Russia', '2000-07-23 00:00:00,Italy', '2016-08-18 00:00:00,Spain', '2006-03-03 00:00:00,Russia', '2005-06-29 00:00:00,Russia', '2005-01-02 00:00:00,Russia', '2003-02-17 00:00:00,Germany', '2016-07-08 00:00:00,Germany', '2002-04-19 00:00:00,Italy']
         self.assertEqual(df_list, expect, "DataFrame contents should match the expected output")
