@@ -32,6 +32,7 @@ def f_3958(json_str, filename, sheet_name="sheet1"):
     >>> json_str = '[{"Name": "John", "Age": 30}, {"Name": "Jane", "Age": 28}]'
     >>> True if f_3958(json_str, 'data.xls').endswith('data.xls') else False # True
     True
+    >>> os.remove('data.xls')
     """
     
     if not isinstance(json_str, (str, bytes, bytearray)):
