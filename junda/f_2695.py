@@ -24,12 +24,19 @@ def f_2695(file_path, onpick):
     - numpy
     - cv2
     - os
+    - tempfile
     
     Example:
     >>> def onpick(event):
     ...     ind = event.ind
     ...     print(f'You picked data point(s) {ind}')
-    >>> ax = f_2695('data/image.jpg', onpick)
+    >>> np.random.seed(42)
+    >>> dummy_img_path = 'image.jpg'
+    >>> dummy_img = np.random.randint(0, 255, (20, 20, 3), dtype=np.uint8)
+    >>> cv2.imwrite(dummy_img_path, dummy_img)
+    True
+    >>> ax = f_2695('image.jpg', onpick)
+    >>> os.remove(dummy_img_path)
     """
     if not os.path.exists(file_path):
         raise FileNotFoundError(f"No file found at {file_path}")
@@ -55,7 +62,7 @@ import cv2
 import os
 import tempfile
 
-class TestF2695(unittest.TestCase):
+class TestCases(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         # Create a dummy image for testing
@@ -93,5 +100,14 @@ class TestF2695(unittest.TestCase):
 
     # Additional tests can be added for different image formats, sizes, etc.
 
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
 if __name__ == "__main__":
-    unittest.main()
+    import doctest
+    doctest.testmod()
+    run_tests()
