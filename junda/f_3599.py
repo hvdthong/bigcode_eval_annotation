@@ -94,7 +94,6 @@ class TestCases(unittest.TestCase):
         }
         # Define the expected "ground truth" for comparison
         self.expected_render_context = self.complex_context 
-            
 
     @patch('os.path.exists', return_value=True)
     @patch('docxtpl.DocxTemplate.render')
@@ -147,4 +146,6 @@ if __name__ == "__main__":
     import doctest
     doctest.testmod()
     run_tests()
+    os.remove('template.docx')
+    os.remove('output.docx')
 
