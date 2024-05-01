@@ -37,6 +37,7 @@ def f_3343(image_path='image.jpg', n_clusters=3, random_seed=42):
     Example:
     >>> create_dummy_image('image.jpg')
     >>> original_img_array, segmented_img_array = f_3343('image.jpg', 3)
+    >>> os.remove('image.jpg')
     >>> print(original_img_array.shape) # Example output
     (10, 10, 3)
     >>> print(segmented_img_array.shape) # Example output for n_clusters > 1
