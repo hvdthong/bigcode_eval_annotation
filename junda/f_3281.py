@@ -26,7 +26,10 @@ def f_3281(img_path, angle):
     - os
 
     Example:
-    >>> original_img_array, rotated_img_array = f_3281('sample.png', 45)
+    >>> img_path = 'sample.png'
+    >>> create_dummy_image(image_path=img_path)
+    >>> original_img_array, rotated_img_array = f_3281(img_path, 45)
+    >>> os.remove(img_path)
     """
     if not os.path.exists(img_path):
         raise FileNotFoundError(f"No file found at {img_path}")
@@ -69,7 +72,7 @@ def create_dummy_image(image_path='test_image.png', size=(10, 10)):
 
     img.save(image_path)
 
-class TestF3281(unittest.TestCase):
+class TestCases(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
@@ -100,5 +103,14 @@ class TestF3281(unittest.TestCase):
         _, rotated_img = f_3281('test_image.png', -45)
         self.assertIsInstance(rotated_img, np.ndarray)
 
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
