@@ -18,9 +18,10 @@ def f_3290(excel_file_path, file_name, column_name):
     - FileNotFoundError: If the Excel file does not exist at the specified path.
     - ValueError: If the specified column is not found in the Excel file.
 
-    Required Libraries:
+    Requirements:
     - pandas
     - numpy
+    - os 
 
     Example:
     >>> data_dir, file_name = './data/', 'excel_file1.xls'
