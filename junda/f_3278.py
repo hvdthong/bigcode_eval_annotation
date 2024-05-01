@@ -1,6 +1,5 @@
 from PIL import Image, ImageFilter
 import cv2
-import matplotlib.pyplot as plt
 import numpy as np
 import os
 
@@ -20,15 +19,17 @@ def f_3278(img_path, blur_radius=5):
     Raises:
     - FileNotFoundError: If the image file does not exist at the specified path.
 
-    Required Libraries:
+    Requirements:
     - PIL
-    - cv2
-    - matplotlib
+    - opencv-python
     - numpy
     - os
 
     Example:
-    >>> original, processed = f_3278('sample.png')
+    >>> image_path = 'sample.png'
+    >>> create_dummy_image(image_path=image_path)
+    >>> original, processed = f_3278(image_path)
+    >>> os.remove(image_path)
     """
     if not os.path.exists(img_path):
         raise FileNotFoundError(f"No file found at {img_path}")
@@ -51,7 +52,7 @@ def create_dummy_image(image_path='test_image.jpg', size=(10, 10)):
     draw.rectangle([2, 2, 8, 8], fill='black')
     img.save(image_path)
 
-class TestF3278(unittest.TestCase):
+class TestCases(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         create_dummy_image()
@@ -97,5 +98,14 @@ class TestF3278(unittest.TestCase):
         _, processed_custom = f_3278('test_image.jpg', blur_radius=10)
         self.assertFalse(np.array_equal(processed_default, processed_custom))
 
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
