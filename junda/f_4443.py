@@ -35,6 +35,7 @@ def f_4443(f_list, file_path):
     >>> def f(x): return 2 * x
     >>> def g(x, y=2): return x * y
     >>> f_4443([f, g], './function_info.csv')
+    >>> os.remove('./function_info.csv')
     """
     
     if not all(callable(f) for f in f_list):
