@@ -20,14 +20,16 @@ def f_3342(image_path='image.jpg', threshold=128):
     - ValueError: If the threshold is not an integer or not in the range 0-255.
 
     Requirements:
-    - opencv
+    - opencv-python 
     - numpy
     - os
     - PIL
 
     Example:
-    >>> create_dummy_image('image.jpg')
-    >>> original_img_array, binary_img_array = f_3342('image.jpg', 128)
+    >>> img_path = 'image.jpg'
+    >>> create_dummy_image(img_path)
+    >>> original_img_array, binary_img_array = f_3342(img_path, 128)
+    >>> os.remove(img_path)
     >>> original_img_array.shape, binary_img_array.shape # ((image_height, image_width), (image_height, image_width))
     ((20, 20), (20, 20))
     """
