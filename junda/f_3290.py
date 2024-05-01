@@ -23,8 +23,13 @@ def f_3290(excel_file_path, file_name, column_name):
     - numpy
 
     Example:
-    >>> stats = f_3290('/path/to/excel/', 'excel_file1.xls', 'Sales')
+    >>> data_dir, file_name = './data/', 'excel_file1.xls'
+    >>> create_dummy_file(data_dir, file_name)
+    >>> stats = f_3290(data_dir, file_name, 'Sales')
+    >>> os.remove(data_dir + file_name)
+    >>> os.rmdir(data_dir)
     >>> print(stats)
+    {'mean': 200.0, 'median': 200.0, 'std_dev': 70.71067811865476}
     """
     excel_file = os.path.join(excel_file_path, file_name)
     if not os.path.exists(excel_file):
@@ -44,7 +49,14 @@ import unittest
 import pandas as pd
 import os
 
-class TestF3290(unittest.TestCase):
+def create_dummy_file(data_dir, file_name):
+    os.makedirs(data_dir, exist_ok=True)
+    # Creating a dummy Excel file
+    data = {'Sales': [100, 200, 150, 300, 250]}
+    df = pd.DataFrame(data)
+    df.to_excel(data_dir + file_name, index=False)
+
+class TestCases(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.test_data_dir = './test_data/'
@@ -88,5 +100,14 @@ class TestF3290(unittest.TestCase):
             f_3290(self.test_data_dir, 'mixed_data.xlsx', 'Sales')
         os.remove(self.test_data_dir + 'mixed_data.xlsx')
 
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
