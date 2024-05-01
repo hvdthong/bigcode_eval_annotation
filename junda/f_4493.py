@@ -2,6 +2,7 @@ import unicodedata
 import csv
 from collections import Counter
 import matplotlib.pyplot as plt
+import os 
 
 def f_4493(csv_file):
     """
@@ -25,11 +26,13 @@ def f_4493(csv_file):
     - collections
     - matplotlib.pyplot
     - matplotlib.axes
+    - os
 
 
     Example:
-    >>> create_dummy_csv_file()
+    >>> create_dummy_csv_file('dummy.csv')
     >>> ax, most_common_words = f_4493('dummy.csv')
+    >>> os.remove('dummy.csv')
     >>> type(ax)
     <class 'matplotlib.axes._axes.Axes'>
     >>> type(most_common_words)
