@@ -33,18 +33,10 @@ def f_2724(df, target_col, test_size=0.2, random_state=42, epochs=10, batch_size
     - Dense layer with 1 unit and sigmoid activation.
 
     Example:
-    >>> df = pd.read_csv('sample_data.csv')
-    Traceback (most recent call last):
-      ...
-    FileNotFoundError: [Errno 2] No such file or directory: 'sample_data.csv'
-    >>> accuracy = f_2724(df, 'target')
-    Traceback (most recent call last):
-      ...
-    NameError: name 'df' is not defined
-    >>> print(accuracy)
-    Traceback (most recent call last):
-      ...
-    NameError: name 'accuracy' is not defined
+    >>> np.random.seed(42)
+    >>> df = pd.DataFrame(np.random.rand(100, 4), columns=['feat1', 'feat2', 'feat3', 'target'])
+    >>> accuracy = f_2724(df, 'target') # doctest: +SKIP
+    >>> print(type(accuracy)) # doctest: +SKIP
     """
     if target_col not in df.columns:
         raise ValueError(f"Column '{target_col}' does not exist in DataFrame")
