@@ -1,5 +1,4 @@
 import cv2
-import numpy as np
 import os
 from matplotlib import pyplot as plt
 from PIL import Image
@@ -20,14 +19,17 @@ def f_3345(image_path='image.jpg', histogram_path='histogram.png'):
     - FileNotFoundError: If the image file does not exist at the specified path.
 
     Requirements:
-    - cv2
+    - opencv
     - numpy
     - os
     - matplotlib.pyplot
-    - PIL.Image
+    - pillow
 
     Example:
+    >>> create_dummy_image('image.jpg')
     >>> histogram_axes = f_3345('image.jpg', 'histogram.png')
+    >>> os.remove('histogram.png')
+    >>> os.remove('image.jpg')
     >>> histogram_axes.title.get_text()
     'Grayscale Histogram'
     """
@@ -63,7 +65,7 @@ def create_dummy_image(image_path='test_image.jpg', size=(20, 20)):
     draw.line([2, 15, 18, 15], fill='black', width=1)
     img.save(image_path)
 
-class TestF3345(unittest.TestCase):
+class TestCases(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
@@ -94,5 +96,14 @@ class TestF3345(unittest.TestCase):
         histogram_axes = f_3345('test_image.jpg')
         self.assertIsInstance(histogram_axes.get_lines()[0], matplotlib.lines.Line2D)
 
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
