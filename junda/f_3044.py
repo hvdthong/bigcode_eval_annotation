@@ -22,10 +22,16 @@ def f_3044(sheet_name, excel_file_location="test.xlsx", csv_file_location="test.
     - os
 
     Example:
-    >>> f_3044('Sheet1') # {'Column1': sum_value1, 'Column2': sum_value2, ...}
-    Traceback (most recent call last):
-      ...
-    FileNotFoundError: Excel file not found at test.xlsx
+    >>> test_excel_file = 'dummy_test.xlsx'
+    >>> test_csv_file = 'dummy_test.csv'
+    >>> test_sheet_name = 'TestSheet'
+    >>> data = {'A': [10, 20, 30], 'B': [40, 50, 60]}
+    >>> df = pd.DataFrame(data)
+    >>> df.to_excel(test_excel_file, sheet_name=test_sheet_name, index=False)
+    >>> f_3044(sheet_name='TestSheet', excel_file_location=test_excel_file, csv_file_location=test_csv_file) # {'Column1': sum_value1, 'Column2': sum_value2, ...}
+    {'A': 60, 'B': 150}
+    >>> os.remove(test_excel_file)
+    >>> os.remove(test_csv_file)
     
     Note:
     - Ensure the Excel file contains only numerical data for accurate sum calculations.
