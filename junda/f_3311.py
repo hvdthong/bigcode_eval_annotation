@@ -23,6 +23,10 @@ def f_3311(dataframe: pd.DataFrame) -> pd.DataFrame:
     ...     'UnicodeString': ['\u004A\u006F\u0068\u006E', '\u0041\u006E\u006E\u0061', '\u0050\u0065\u0074\u0065\u0072']
     ... })
     >>> f_3311(df)
+        Name  Age  Salary UnicodeString
+    0   John   27   50000          John
+    1   Anna   23   60000          Anna
+    2  Peter   29   70000         Peter
 
     Requirements:
     - pandas
