@@ -28,14 +28,17 @@ def f_3209(directory='./', file_pattern='*.txt', regex=r'([0-9]+)'):
     - pandas
 
     Example:
+    >>> data_dir = './data/'
+    >>> create_dummy_files(data_dir)
     >>> df = f_3209('./data/', '*.txt', r'([0-9]+)')
-    Traceback (most recent call last):
-    ...
-    FileNotFoundError: The directory './data/' does not exist.
+    >>> tear_down_files(data_dir)
     >>> print(df)
-    Traceback (most recent call last):
-    ...
-    NameError: name 'df' is not defined
+              Filename Numeric Data
+    0        empty.txt           []
+    1        file1.txt   [123, 456]
+    2        file2.txt        [789]
+    3        mixed.txt   [123, 456]
+    4  non_numeric.txt           []
     """
     if not os.path.exists(directory):
         raise FileNotFoundError(f"The directory '{directory}' does not exist.")
@@ -58,6 +61,26 @@ def f_3209(directory='./', file_pattern='*.txt', regex=r'([0-9]+)'):
 import unittest
 import pandas as pd
 import os
+
+def create_dummy_files(data_dir):
+    os.makedirs(data_dir, exist_ok=True)
+
+    # Creating test files
+    test_files_data = {
+        'file1.txt': '123 abc 456',
+        'file2.txt': '789 xyz',
+        'empty.txt': '',
+        'non_numeric.txt': 'abc def',
+        'mixed.txt': 'abc 123 def 456'
+    }
+    for filename, content in test_files_data.items():
+        with open(data_dir + filename, 'w') as file:
+            file.write(content)
+
+def tear_down_files(data_dir):
+    for filename in os.listdir(data_dir):
+        os.remove(os.path.join(data_dir, filename))
+    os.rmdir(data_dir)
 
 class TestCases(unittest.TestCase):
     @classmethod
