@@ -22,10 +22,11 @@ def f_3046(original_file_location="test.xlsx", new_file_location="new_test.xlsx"
     - os
 
     Example:
-    >>> df = f_3046('test.xlsx', 'new_test.xlsx', 'Sheet1')
-    Traceback (most recent call last):
-      ...
-    FileNotFoundError: No file found at test.xlsx
+    >>> file_path, file_new_path, sheet_name = 'test.xlsx', 'new_test.xlsx', 'Sheet1'
+    >>> create_dummy_excel(file_path, sheet_name)
+    >>> df = f_3046(file_path, file_new_path, sheet_name)
+    >>> os.remove(file_path)
+    >>> os.remove(file_new_path)
     """
     if not os.path.exists(original_file_location):
         raise FileNotFoundError(f"No file found at {original_file_location}")
