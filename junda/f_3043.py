@@ -28,14 +28,12 @@ def f_3043(file_location, sheet_name):
     - openpyxl
 
     Example:
-    >>> result, fig = f_3043('test.xlsx', 'Sheet 1')
-    Traceback (most recent call last):
-      ...
-    FileNotFoundError: No file found at test.xlsx
+    >>> file_path='test.xlsx'
+    >>> create_dummy_excel(file_path)
+    >>> result, fig = f_3043(file_path, 'TestSheet')
+    >>> os.remove(file_path)
     >>> fig.axes[0].get_title()
-    Traceback (most recent call last):
-      ...
-    NameError: name 'fig' is not defined
+    'Mean and Standard Deviation'
     """
     if not os.path.exists(file_location):
         raise FileNotFoundError(f"No file found at {file_location}")
