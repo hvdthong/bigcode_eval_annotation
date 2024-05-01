@@ -61,6 +61,7 @@ def f_3287(excel_directory: str, file_pattern: str) -> List[pd.DataFrame]:
     2           2  0.019193  0.301575  0.660174
     3           3  0.290078  0.618015  0.428769
     4           4  0.135474  0.298282  0.569965
+    >>> tear_down_excel_files(data_dir)
     """
     if not os.path.exists(excel_directory):
         raise FileNotFoundError(f"The directory {excel_directory} does not exist.")
