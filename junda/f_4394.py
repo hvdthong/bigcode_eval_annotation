@@ -1,6 +1,7 @@
 import numpy as np
 from difflib import SequenceMatcher
 import matplotlib.pyplot as plt
+import os 
 
 def f_4394(s_list, plot_path=None):
     """
@@ -23,6 +24,7 @@ def f_4394(s_list, plot_path=None):
     - numpy
     - difflib
     - matplotlib.pyplot as plt
+    - os
 
     Example:
     >>> s_list = ['apple', 'apples', 'ape', 'app', 'april']
@@ -30,6 +32,7 @@ def f_4394(s_list, plot_path=None):
     >>> expect = [0.7522727272727273, 0.6969696969696969, 0.6458333333333333, 0.6458333333333333, 0.5363636363636364]
     >>> np.all(np.isclose(avg_scores, expect, atol=1e-4))
     True
+    >>> os.remove('similarity_plot.png')
     """
     if not all(isinstance(item, str) for item in s_list):
         raise ValueError("All items in s_list must be strings.")
@@ -71,7 +74,6 @@ class TestCases(unittest.TestCase):
         self.assertTrue(np.isnan(result[0])) 
 
     def test_plot_saving(self):
-        import os
         s_list = ['apple', 'apples', 'ape']
         plot_path = 'test_plot.png'
         f_4394(s_list, plot_path)
