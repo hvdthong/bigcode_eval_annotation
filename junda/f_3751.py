@@ -76,14 +76,14 @@ def f_3751(data, date_column, country_column, date_format, countries=None, count
 
     plots = []
     for country in countries:
-        country_data = data[data[country_column] == country]
+        country_data = data[data[country_column] == country].copy()
         if not country_data.empty:
             try:
                 locale.setlocale(locale.LC_TIME, country_codes[country])
             except Exception as e:
                 raise Exception(f"Failed to set locale for '{country}': {e}")
 
-            country_data['parsed_dates'] = country_data[date_column].apply(
+            country_data.loc[:, 'parsed_dates'] = country_data[date_column].apply(
                 lambda x: datetime.strptime(x, date_format).date())
             ax = country_data['parsed_dates'].hist()
             ax.set(title=f'Date Distribution - {country}', xlabel='Date', ylabel='Frequency')
