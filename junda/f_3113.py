@@ -26,10 +26,21 @@ def f_3113(data_dir='./data/'):
     - glob
 
     Example:
-    >>> print(f_3113('./data/')) 
-    Traceback (most recent call last):
-      ...
-    FileNotFoundError: The directory './data/' does not exist.
+    >>> data_dir = './data/'
+    >>> dummy_files = create_dummy_files(data_dir)
+    >>> print(f_3113(data_dir))
+    +-----------+------+---------+
+    |   File    | Rows | Columns |
+    +===========+======+=========+
+    | test2.csv | 10   | 4       |
+    +-----------+------+---------+
+    | test2.csv | 10   | 4       |
+    +-----------+------+---------+
+    | test1.csv | 5    | 2       |
+    +-----------+------+---------+
+    | test1.csv | 5    | 2       |
+    +-----------+------+---------+
+    >>> tear_down_dummy_files(data_dir, dummy_files)
     """
     if not os.path.exists(data_dir):
         raise FileNotFoundError(f"The directory '{data_dir}' does not exist.")
@@ -46,7 +57,6 @@ def f_3113(data_dir='./data/'):
         except pd.errors.EmptyDataError:
             # Handle empty CSV file
             raise pd.errors.EmptyDataError(f"Error when reading file '{file}'.")
-
         data = pd.read_csv(file)
         summary_data.append([os.path.basename(file), data.shape[0], data.shape[1]])
 
@@ -58,6 +68,31 @@ def f_3113(data_dir='./data/'):
 import unittest
 import pandas as pd
 import os
+
+def create_dummy_files(data_dir):
+    os.makedirs(data_dir, exist_ok=True)
+
+    # Creating dummy CSV files with more diverse data
+    dummy_files = ['test1.csv', 'test2.csv']
+
+    # Create a DataFrame with a range of integers
+    pd.DataFrame({'col1': range(5), 'col2': range(5, 10)}).to_csv(data_dir + dummy_files[0], index=False)
+
+    # Create a DataFrame with mixed data types and missing values
+    mixed_data = pd.DataFrame({
+        'a': range(10),
+        'b': [float(x) for x in range(10)],
+        'c': list('abcdefghij'),
+        'd': [None if x % 2 == 0 else x for x in range(10)]
+    })
+    mixed_data.to_csv(data_dir + dummy_files[1], index=False)
+    return dummy_files
+
+def tear_down_dummy_files(data_dir, dummy_files):
+    # Cleaning up the dummy data directory
+    for file in dummy_files:
+        os.remove(data_dir + file)
+    os.rmdir(data_dir)
 
 class TestCases(unittest.TestCase):
     @classmethod
