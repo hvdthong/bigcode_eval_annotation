@@ -16,14 +16,17 @@ def f_3279(img_path):
     Raises:
     - FileNotFoundError: If the image file does not exist at the specified path.
 
-    Required Libraries:
+    Requirements:
     - PIL
-    - cv2
+    - opencv-python
     - numpy
     - os
 
     Example:
-    >>> img, contours = f_3279('sample.png')
+    >>> img_path = 'sample.png'
+    >>> create_dummy_image(image_path=img_path)
+    >>> img, contours = f_3279(img_path)
+    >>> os.remove(img_path)
     """
     if not os.path.exists(img_path):
         raise FileNotFoundError(f"No file found at {img_path}")
@@ -48,7 +51,7 @@ def create_dummy_image(image_path='test_image.jpg', size=(10, 10)):
     draw.rectangle([2, 2, 8, 8], fill='black')
     img.save(image_path)
 
-class TestF3279(unittest.TestCase):
+class TestCases(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         create_dummy_image()
@@ -109,5 +112,14 @@ class TestF3279(unittest.TestCase):
         with self.assertRaises(FileNotFoundError):
             f_3279(123)  # Passing a non-string path
 
-if __name__ == '__main__':
-    unittest.main()
+def run_tests():
+    """Run all tests for this function."""
+    loader = unittest.TestLoader()
+    suite = loader.loadTestsFromTestCase(TestCases)
+    runner = unittest.TextTestRunner()
+    runner.run(suite)
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    run_tests()
