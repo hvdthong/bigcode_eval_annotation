@@ -20,7 +20,7 @@ def f_3342(image_path='image.jpg', threshold=128):
     - ValueError: If the threshold is not an integer or not in the range 0-255.
 
     Requirements:
-    - opencv-python 
+    - opencv
     - numpy
     - os
     - PIL
