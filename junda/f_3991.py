@@ -38,6 +38,8 @@ def f_3991(file_path1, file_path2, delimiter=',', quotechar='"'):
     Example:
     >>> create_dummy_test_files()
     >>> df = f_3991('file1.csv', 'file2.csv')
+    >>> os.remove('file1.csv')
+    >>> os.remove('file2.csv')
     >>> df.head()
        Line Number Status          Content
     0            1         ('name', 'age')
