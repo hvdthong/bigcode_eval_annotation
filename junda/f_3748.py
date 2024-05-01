@@ -29,11 +29,8 @@ def f_3748(data, date_column, country_column, countries=None, country_codes=None
     - matplotlib.axes
 
     Example:
-    >>> data = pd.DataFrame({'dates': ['01/01/2000', '01/02/2000', ...],
-                             'country': ['Russia', 'Germany', ...]})
-    >>> axes = f_3748(data, 'dates', 'country')
-    Each histogram's title is 'Date Distribution - [Country Name]', with the y-axis labeled 'Frequency'.
-    The function uses '%d/%m/%Y' format for dates by default. Adjust the format accordingly to prevent errors.
+    >>> data = pd.DataFrame({'dates': ['01/01/2000', '01/02/2000', ...], 'country': ['Russia', 'Germany', ...]})
+    >>> axes = f_3748(data, 'dates', 'country') # Each histogram's title is 'Date Distribution - [Country Name]', with the y-axis labeled 'Frequency'. The function uses '%d/%m/%Y' format for dates by default. Adjust the format accordingly to prevent errors.
     """
     if not isinstance(data, pd.DataFrame):
         raise ValueError("The 'data' parameter must be a pandas DataFrame.")
@@ -50,13 +47,13 @@ def f_3748(data, date_column, country_column, countries=None, country_codes=None
             raise KeyError(f"Locale code for '{country}' not provided in 'country_codes'.")
 
         locale.setlocale(locale.LC_TIME, country_codes[country])
-        country_data = data[data[country_column] == country]
+        country_data = data[data[country_column] == country].copy()
 
         if country_data.empty:
             continue
 
         try:
-            country_data['parsed_dates'] = pd.to_datetime(country_data[date_column], format='%d/%m/%Y')
+            country_data.loc[:, 'parsed_dates'] = pd.to_datetime(country_data[date_column], format='%d/%m/%Y')
         except ValueError as e:
             raise ValueError(f"Date conversion error for '{country}': {e}")
 
