@@ -27,6 +27,7 @@ def f_3346(image_path='image.jpg', threshold=128):
     Example:
     >>> create_dummy_image('image.jpg')
     >>> original_img_array, binary_img_array = f_3346('image.jpg', 128)
+    >>> os.remove('image.jpg')
     >>> original_img_array.shape, binary_img_array.shape # ((image_height, image_width), (image_height, image_width))
     ((20, 20), (20, 20))
     """
