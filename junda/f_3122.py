@@ -37,14 +37,11 @@ def f_3122(file_path='arena.csv', target_column='Index', seed=42):
         1,10,20,30
         2,15,25,35
         3,20,30,40
-
-    >>> ax, importances = f_3122('arena.csv', 'Index')
-    Traceback (most recent call last):
-      ...
-    FileNotFoundError: The file 'arena.csv' does not exist.
-
-    This will train a random forest model predicting 'Index' from 'Score1', 'Score2', and 'Score3', 
-    then plot and return the importances of 'Score1', 'Score2', and 'Score3' as features (X).
+    
+    >>> file_path = 'arena.csv'
+    >>> create_dummy_file(file_path)
+    >>> ax, importances = f_3122(file_path, 'Index') # This will train a random forest model predicting 'Index' from 'Score1', 'Score2', and 'Score3', then plot and return the importances of 'Score1', 'Score2', and 'Score3' as features (X).
+    >>> os.remove(file_path)
     """
     
     if not os.path.exists(file_path):
@@ -81,6 +78,16 @@ import pandas as pd
 import os
 import numpy as np
 from numpy.testing import assert_array_almost_equal
+
+def create_dummy_file(file_path):
+    data = {
+        'Index': [1, 2, 3],
+        'Score1': [10, 15, 20],
+        'Score2': [20, 25, 30],
+        'Score3': [30, 35, 40]
+    }
+    df = pd.DataFrame(data)
+    df.to_csv(file_path, index=False)
 
 
 class TestCases(unittest.TestCase):
