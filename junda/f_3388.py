@@ -29,7 +29,8 @@ def f_3388(image_file: str) -> np.ndarray:
     >>> dummy_image = np.random.randint(0, 256, (10, 10), dtype=np.uint8)
     >>> cv2.imwrite(dummy_image_path, dummy_image)
     True
-    >>> histogram = f_3388('dummy_image.png')
+    >>> histogram = f_3388(dummy_image_path)
+    >>> os.remove(dummy_image_path)
     >>> print(histogram.shape)
     (256,)
 
